@@ -1,0 +1,58 @@
+.GameSelectionSection {
+    display: inline-block;
+    box-sizing: border-box;
+    border: 1px solid #d6d6d6;
+    border-top: 0;
+    border-bottom: 0;
+    height: 100%;
+    width: 120rem;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0);
+    & > article {
+        display: inline-block;
+        width: calc(100% - 10rem);
+        padding: 0 5rem 0 5rem;
+        min-height: 50rem;
+        & > .gameTag {
+            font-weight: 600;
+            font-size: 3rem;
+            padding: 5rem 0 5rem 0;
+            display: block;
+        }
+        
+        & > .gameListBox {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            & > div {
+                cursor: pointer;
+                width: 20rem;
+                & > img {
+                    background-color: #d6d6d6;
+                    height: 20rem;
+                    width: 20rem;
+                }
+                & > p {
+                    padding-top: .3rem;
+                    font-size: 1.6rem;
+                }
+            }
+        }
+        & > .gamePlusViewButtonBox {
+            padding: 5rem 0 5rem 0;
+            display: flex;
+            justify-content: center;
+            & > button {
+                cursor: pointer;
+                border-radius: 5rem;
+                font-size: 1.6rem;
+                background-color: transparent;
+                border: 1px solid #2000EA;
+                color: #2000EA;
+                width: 14.5rem;
+                height: 5rem;
+            }
+        }
+    }
+}

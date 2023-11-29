@@ -1,0 +1,74 @@
+.TopSection {
+    display: flex;
+    justify-content: center;
+    background-color: #FAFAFA;
+    border-bottom: 1px solid #EAEAEA;
+    width: 100%;
+    height: 9.1rem;
+}
+.topContentArticle {
+    height: 100%;
+    width: 120rem;
+    display: flex;
+    & > div {
+        display: flex;
+        align-items: center;
+        height: 100%;
+    }
+    & > .topLeftBox {
+        overflow: hidden;
+        width: 30%;
+        & #menu {
+            cursor: pointer;
+        }
+        & #logo {
+            cursor: pointer;
+            margin-left: 1rem;
+        }
+    }
+    & > .topCenterBox {
+        width: 40%;
+        justify-content: center;
+        & > .searchBox {
+            border-radius: 5rem;
+            padding: 1rem 2rem 1rem 2rem;
+            height: 3rem;
+            max-width: 50rem;
+            width: 100%;
+            display: flex;
+            border: 2px solid #2000E2;
+            &>input {
+                background-color: transparent;
+                font-size: 2rem;
+                width: 100%;
+                border: 0;
+                outline: none;
+            }
+            & > button {
+                cursor: pointer;
+            }
+        }
+    }
+    & > .topRightBox {
+        position: relative;
+        justify-content: flex-end;
+        width: 30%;
+        & > p {
+            cursor: pointer;
+            padding: 1rem;
+            font-size: 1.6rem;
+        }
+        & > img {
+            cursor: pointer;
+        }
+        & > #userBox {
+            list-style: none;
+            z-index: 1;
+            position: absolute;
+            padding: 2rem;
+            border: 1px solid #2000E2;
+            background-color: #FAFAFA;
+            top: 100%;
+        }
+    }
+}
