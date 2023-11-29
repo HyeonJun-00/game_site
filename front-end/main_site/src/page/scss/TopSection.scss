@@ -1,4 +1,6 @@
 .TopSection {
+    z-index: 10;
+    position: fixed;
     display: flex;
     justify-content: center;
     background-color: #FAFAFA;
@@ -62,13 +64,24 @@
             cursor: pointer;
         }
         & > #userBox {
+            display: none;
             list-style: none;
             z-index: 1;
             position: absolute;
-            padding: 2rem;
-            border: 1px solid #2000E2;
+            border: 1px solid #EAEAEA;
             background-color: #FAFAFA;
             top: 100%;
+            &.displayFlag {
+                display: block;
+            }
+            & > li {
+                padding: 1rem 2rem 1rem 2rem;
+                cursor: pointer;
+                font-size: 2rem;
+                &:hover {
+                    background-color: rgba(#2000E2, .04);
+                }
+            }
         }
     }
 }

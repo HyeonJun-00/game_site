@@ -1,0 +1,76 @@
+.LogIn {
+    display: none;
+    position: fixed;
+    background-color: rgba(#000000, .3);
+    width: 100%;
+    height: 100%;
+    &.displayFlag {
+        display: block;
+    }
+}
+.logInBox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    width: 75rem;
+    height: 53rem;
+    background: #FAFAFA;
+    border-radius: 2rem;
+    & > button {
+        cursor: pointer;
+        color: #000000;
+        position: absolute;
+        right: 3rem;
+        top: 2rem;
+        background-color: transparent;
+        padding: 0;
+        border: 0;
+        font-size: 2.5rem;
+    }
+    & > div {
+        width: 45rem;
+        height: 33rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        & > p {
+            font-size: 3.5rem;
+            color: #2000E2;
+            font-weight: 900;
+        }
+        & > input {
+            border-radius: .5rem;
+            border: 0;
+            outline: none;
+            background-color: #F0F0F0;
+            padding-left: 2rem;
+            font-size: 2rem;
+            height: 5rem;
+            &::placeholder {
+                color: #ACACAC;
+            }
+        }
+        & > button {
+            cursor: pointer;
+            border-radius: .5rem;
+            border: 0;
+            background-color: #2000E2;
+            color: #FAFAFA;
+            font-size: 2.5rem;
+            height: 5rem;
+        }
+        & > div {
+            cursor: pointer;
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            width: 100%;
+            height: 5rem;
+        }
+    }
+}
