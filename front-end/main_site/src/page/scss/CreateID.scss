@@ -1,0 +1,85 @@
+.CreateID {
+    z-index: 1000;
+    display: none;
+    position: fixed;
+    background-color: transparent;
+    width: 100%;
+    height: 100%;
+
+    &.displayFlag {
+        display: block;
+    }
+}
+
+.createIDBox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    width: 60rem;
+    height: 71rem;
+    background: #FAFAFA;
+    border-radius: 2rem;
+
+    &>article {
+        width: 45rem;
+
+        &:nth-child(1) {
+            padding-bottom: 5rem;
+        }
+    }
+
+    &>div {
+        width: 45rem;
+        height: 50rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        &>div {
+            height: 5.2rem;
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+
+            &>input {
+                outline: none;
+                border-radius: .5rem;
+                padding-left: 2rem;
+                font-size: 1.8rem;
+                border: 0;
+                background-color: #F0F0F0;
+                width: 100%;
+                &::placeholder {
+                    color: #ACACAC;
+                }
+            }
+
+            &>button {
+                cursor: pointer;
+                border-radius: .5rem;
+                border: 0;
+                color: #FAFAFA;
+                background-color: #2000E2;
+                font-size: 2rem;
+                width: 20.3rem;
+                &.certificationButton {
+                    margin-left: 2rem;
+                }
+            }
+            &:last-child {
+                margin-top: 5rem;
+            }
+
+        }
+
+        &>p {
+            color: #232323;
+            font-size: 1.5rem;
+        }
+    }
+}

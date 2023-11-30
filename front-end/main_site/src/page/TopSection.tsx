@@ -1,15 +1,17 @@
 import './scss/TopSection.scss';
-import {useState, useEffect} from 'react';
+import CreateID from './CreateID';
+import LogIn from './LogIn';
+import {useState} from 'react';
 
 interface state {
-    LogIn : any;
     user : string;
 }
 
-const TopSection = ({ user, LogIn }: state) => {
+const TopSection = ({ user}: state) => {
     const [logInClass, setLogInClass] = useState("");
+    const [createIDClass, setCreateIDClass] = useState("");
     const [userBoxClass, setFlag] = useState("");
-    const [userBox, setUserBox] = useState(
+    const [userBox, ] = useState(
         <li onClick={() => {
             setFlag("");
             setLogInClass("displayFlag");
@@ -19,11 +21,11 @@ const TopSection = ({ user, LogIn }: state) => {
         if (userBoxClass === "") {setFlag("displayFlag");}
         else { setFlag(""); }
     };
+    
     return (
         <section className='TopSection'>
             <article className='topContentArticle'>
                 <div className='topLeftBox'>
-                    <img id='menu' src={`${process.env.PUBLIC_URL}/images/menu.png`} alt='menu'></img>
                     <img id='logo' src={`${process.env.PUBLIC_URL}/images/logo.png`} alt='logo'></img>
                 </div>
                 <div className='topCenterBox'>
@@ -40,7 +42,8 @@ const TopSection = ({ user, LogIn }: state) => {
                     </ul>
                 </div>
             </article>
-            {<LogIn logIn={[logInClass, setLogInClass]}></LogIn>}
+            <LogIn logIn={[logInClass, setLogInClass]} setCreateIDClass={setCreateIDClass}></LogIn>
+            <CreateID displayFalg={[createIDClass, setCreateIDClass]}></CreateID>
         </section>
     );
 };

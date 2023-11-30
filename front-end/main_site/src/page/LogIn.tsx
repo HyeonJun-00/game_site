@@ -4,12 +4,15 @@ interface state {
     children? : any;
     userObject? : any;
     logIn? : any;
-    
+    setCreateIDClass? : any;
 }
 
-const LogIn = ({logIn}:state) => {
+const LogIn = ({logIn, setCreateIDClass}:state) => {
     const [logInClass, setLogInClass] = logIn;
-    
+    const displayFalgEvent = () => {
+        setCreateIDClass("displayFlag");
+    }
+
     return (
         <div className={`LogIn ${logInClass}`}>
             <div className='logInBox'>
@@ -19,7 +22,7 @@ const LogIn = ({logIn}:state) => {
                     <input type="text"  placeholder='USER ID'/>
                     <input type="password" placeholder='PASSWORD'/>
                     <button>Login</button>
-                    <div>회원가입</div>
+                    <div onClick={() => displayFalgEvent()}>회원가입</div>
                 </div>
             </div>
         </div>
