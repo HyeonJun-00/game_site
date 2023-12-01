@@ -4,4 +4,44 @@ html(lang="ko")
         meta(charset="UTF-8")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         title admin
-    body 
+        link(rel="stylesheet", href="./css/admin.css")
+        script( src="http://code.jquery.com/jquery-latest.min.js")
+    body
+        section
+            article 
+                div 유저 테이블
+                div
+                    div
+                        div
+                            p 유저 닉네임
+                            p 유저 이메일
+                            p 가입일
+                    div
+                        - for(let i = 0; i < 20; i++) 
+                            div
+                                - for(let i = 0; i < 3; i++)
+                                    p a
+                                div.buttonBox
+                                    button 수정
+                                    button 삭제
+            article 
+                div 게임 테이블
+                div.gameTable 
+                    div
+                        div
+                            p 게임 이름
+                            p 게임 태그
+                            p 등록일
+                            p view
+                    div
+                        - for(let i = 0; i < 20; i++) 
+                            div
+                                - for(let i = 0; i < 3; i++)
+                                    p 
+                                div.viewBox
+                                    div.viewOnOff
+                                div.buttonBox
+                                    button 설명
+                                    button 수정
+                                    button 삭제
+    script(src="./js/admin.js") 

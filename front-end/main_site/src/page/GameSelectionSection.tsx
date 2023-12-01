@@ -43,6 +43,7 @@ const GameSelectionSection = () => {
     console.log(seeMore);
     for (const key in gameObject) {
         const gameName:string = key;
+        const seeMoreString:string = seeMore[gameName] !== "heightFlag" ? "+ 더 보기" : "- 접기";
         const gameList: any = gameObject[gameName].map((v) => {
             return (
                 <div key={Math.random()}>
@@ -51,7 +52,6 @@ const GameSelectionSection = () => {
                 </div>
             );
         });
-        let seeMoreString:string = seeMore[gameName] !== "heightFlag" ? "+ 더 보기" : "- 접기";
 
         articleList.push(
             <article key={Math.random()}>
