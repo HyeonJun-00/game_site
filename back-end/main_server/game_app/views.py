@@ -45,5 +45,10 @@ def create_user(req):
     UserModel.objects.create(user_nickname=nickname, user_password=password, user_email=email)
     return HttpResponse("create")
 
+def delete_user(req):
+    nickname = req.GET["nickname"]
+    UserModel.objects.get(user_nickname=nickname).delete()
+    return HttpResponse("delate")
+
 
 # Create your views here.
