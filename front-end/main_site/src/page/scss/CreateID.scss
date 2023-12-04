@@ -48,14 +48,22 @@
 
             &>input {
                 outline: none;
+                box-sizing: border-box;
                 border-radius: .5rem;
                 padding-left: 2rem;
+                padding-right: 5.2rem;
                 font-size: 1.8rem;
                 border: 0;
                 background-color: #F0F0F0;
                 width: 100%;
                 &::placeholder {
                     color: #ACACAC;
+                }
+                &.possible {
+                    border: 1px solid green;
+                }
+                &.impossible {
+                    border: 1px solid rgb(241, 0, 0);
                 }
             }
 

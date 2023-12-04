@@ -18,4 +18,8 @@ from game_app import views
 
 urlpatterns = [
     path('', views.index),
+    path('get_user_list/', views.get_user_list),
+    path('create_user/', views.create_user),
+    path('nickname_duplicate_check/', views.nickname_duplicate_check),
+    path('user_login/', views.user_login),
 ]

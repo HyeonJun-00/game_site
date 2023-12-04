@@ -10,14 +10,14 @@ html(lang="ko")
         section
             article 
                 div 유저 테이블
-                div
+                div.userTable
                     div
                         div
                             p 유저 닉네임
                             p 유저 이메일
                             p 가입일
-                    div
-                        - for(let i = 0; i < 20; i++) 
+                    div.tableBox
+                        - for(let i = 0; i < 0; i++) 
                             div
                                 - for(let i = 0; i < 3; i++)
                                     p a
@@ -33,7 +33,7 @@ html(lang="ko")
                             p 게임 태그
                             p 등록일
                             p view
-                    div
+                    div.tableBox
                         - for(let i = 0; i < 20; i++) 
                             div
                                 - for(let i = 0; i < 3; i++)
