@@ -56,7 +56,9 @@ const TopSection = ({user, loginCookie}: state) => {
         <section className='TopSection'>
             <article className='topContentArticle'>
                 <div className='topLeftBox'>
-                    <img id='logo' src={`${process.env.PUBLIC_URL}/images/logo.png`} alt='logo'></img>
+                    <Link to="/">
+                        <img id='logo' src={`${process.env.PUBLIC_URL}/images/logo.png`} alt='logo'></img>
+                    </Link>
                 </div>
                 <div className='topCenterBox'>
                     <div className='searchBox'>

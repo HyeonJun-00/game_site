@@ -1,5 +1,6 @@
 import './scss/GameSelectionSection.scss';
 import {useState} from 'react';
+import { Link } from 'react-router-dom';
 
 interface game {
     gameName: string;
@@ -46,10 +47,10 @@ const GameSelectionSection = () => {
         const seeMoreString:string = seeMore[gameName] !== "heightFlag" ? "+ 더 보기" : "- 접기";
         const gameList: any = gameObject[gameName].map((v) => {
             return (
-                <div key={Math.random()}>
-                    <img alt='' src={v.gameLink}></img>
-                    <p>{v.gameName}</p>
-                </div>
+                <Link to="game/"  key={Math.random()} >
+                        <img alt='' src={v.gameLink}></img>
+                        <p>{v.gameName}</p>
+                </Link>
             );
         });
 
