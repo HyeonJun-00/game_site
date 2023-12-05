@@ -9,8 +9,8 @@ class UserAdmin {
                     <p>${v.email}</p>
                     <p>${v.created}</p>
                     <div class="buttonBox">
-                        <button class="updateButton" value="${v.nickname}">수정</button>
-                        <button class="deleteButton" value="${v.nickname}">삭제</button>
+                        <button class="updateButton" value="${v.no}">수정</button>
+                        <button class="deleteButton" value="${v.no}">삭제</button>
                     </div>
                 </div>`
             );
@@ -19,20 +19,19 @@ class UserAdmin {
     }
     getUserList() {
         $.ajax({
-            url: "http://kkms4001.iptime.org:10096/game/get_user_list/",
+            url: "http://kkms4001.iptime.org:10096/game/user/",
+            type: "get",
             success: (data) => {
                 this.printUserList(JSON.parse(data));
             }
         });
     }
     deleteUser(e) {
-        const targetNickname = $(e.target).val();
-        if (confirm(targetNickname + "을 삭제 하겠습니까?")) {
+        const targetID = $(e.target).val();
+        if (confirm("정말 삭제 하겠습니까?")) {
             $.ajax({
-                url: "http://kkms4001.iptime.org:10096/game/delete_user/",
-                data: {
-                    nickname: targetNickname,
-                },
+                url: `http://kkms4001.iptime.org:10096/game/user/${targetID}/`,
+                type: "delete",
                 success: (data) => {
                     this.getUserList();
                 }
@@ -44,14 +43,13 @@ class UserAdmin {
 (() => {
     // for (let i = 0; i < 10; i++) {
     //     $.ajax({
-    //         url: "http://kkms4001.iptime.org:10096/game/create_user/",
+    //         url: "http://kkms4001.iptime.org:10096/game/user/",
+    //         type: "post",
     //         data: {
     //             "nickname": "test" + i,
     //             "password": "test" + i,
     //             "email": "test" + i + "@test.com",
     //         },
-    //         success: (data) => {
-    //         }
     //     });
     // }
     const userAdmin = new UserAdmin();

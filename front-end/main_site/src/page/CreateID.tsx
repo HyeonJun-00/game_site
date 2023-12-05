@@ -93,13 +93,13 @@ const CreateID = ({displayFalg}:state) => {
     const signInFunction = () => {
         const signUpSuccessful = async () => {
             try {
-                const response = await axios.get('http://kkms4001.iptime.org:10096/game/create_user/', {
-                    params: {
+                const response = await axios.post('http://kkms4001.iptime.org:10096/game/user/', 
+                    new URLSearchParams({
                         nickname: userID,
                         password: userPW,
                         email: userEmail,
-                    }
-                });
+                    })
+                );
                 const resData = response.data;
                 if (resData === "create") {
                     alert("가입을 축하 드립니다.");
