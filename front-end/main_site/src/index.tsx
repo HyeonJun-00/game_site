@@ -10,11 +10,11 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <CookiesProvider>
-    <BrowserRouter>
+  <BrowserRouter>
+    <CookiesProvider>
       <App />
-    </BrowserRouter>
-  </CookiesProvider>
+    </CookiesProvider>
+  </BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function

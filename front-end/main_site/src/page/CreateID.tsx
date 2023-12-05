@@ -33,7 +33,7 @@ const CreateID = ({displayFalg}:state) => {
             }[checkTarget];
             const targetRegularExpression = {
                 "id" : /^[a-z0-9가-힣]{2,15}$/i,
-                "email" : /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+                "email" : /^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
                 "password" : /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/,
                 "passwordCheck" : /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/,
             }[checkTarget];
