@@ -19,7 +19,9 @@ from game_app import views
 urlpatterns = [
     path('user/', views.User.as_view()),
     path('user/<int:id>/', views.User.as_view()),
-    #path('create_user/', views.create_user),
     path('nickname_duplicate_check/', views.nickname_duplicate_check),
     path('user_login/', views.user_login),
+    path('game/', views.Game.as_view()),
+    path('game/<int:id>/', views.Game.as_view()),
+    path('game/<int:id>/<view>/', views.Game.as_view()),
 ]

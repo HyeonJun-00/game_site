@@ -21,7 +21,7 @@ const LogIn = ({logIn, setCreateIDClass, loginCookie}:state) => {
     }
     const userLogIn = async () => {
         try {
-            const response = await axios.get('http://kkms4001.iptime.org:10096/game/user_login/', {
+            const response = await axios.get('http://kkms4001.iptime.org:10096/user_login/', {
                 params: {
                     nickname:userID,
                     password:userPW
