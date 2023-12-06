@@ -100,8 +100,7 @@ const CreateID = ({displayFalg}:state) => {
                         email: userEmail,
                     })
                 );
-                const resData = response.data;
-                if (resData === "create") {
+                if (response.status === 200) {
                     alert("가입을 축하 드립니다.");
                 } else {
                     alert("가입을 실패 하였습니다.");
