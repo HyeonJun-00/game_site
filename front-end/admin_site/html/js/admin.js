@@ -67,12 +67,12 @@ class GameAdmin {
     patchView(e) {
         const targetID = $(e.target).attr("data-id");
         const targetView = $(e.target).attr("data-view") !== "true";
-       
         $.ajax({
             url: `http://kkms4001.iptime.org:10096/game/${targetID}/${targetView}/`,
             type: "patch",
             success: (data) => {
-                this.getGameList();
+                $(e.target).attr("data-view", `${targetView}`);
+                $(e.target).toggleClass("turnOff");
             }
         });
     }
