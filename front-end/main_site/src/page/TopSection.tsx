@@ -17,22 +17,13 @@ const TopSection = ({user, loginCookie}: state) => {
     const [userBoxClass, setFlag] = useState("");
     const [userBox, setUserBox] = useState(<></>);
     const profileClickEvnet = () => {
-        if (userBoxClass === "") { setFlag("displayFlag"); }
+        if (cookies.id === undefined) {setLogInClass("displayFlag");} 
+        else if (userBoxClass === "") { setFlag("displayFlag"); }
         else { setFlag(""); }
     };
     useEffect(() => {
         if (cookies.id === undefined) {
-            setUserBox(
-                <>
-                    <li key={Math.random()} onClick={() => {
-                        setFlag("");
-                        setLogInClass("displayFlag");
-                    }}>로그인</li>
-                    <li key={Math.random()} onClick={() => {
-                        window.location.href = "http://kkms4001.iptime.org/~c18st09/project/game_site/front-end/admin_site/html/admin.html";
-                    }}>관리자 페이지</li>
-                </>
-            );
+            setUserBox(<></>);
         } else {
             setUserBox(
                 <>

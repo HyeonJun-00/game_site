@@ -68,8 +68,8 @@ class Game(View):
         return HttpResponse(status=200)
 
 def user_login(req):
-    nickname = req.GET["nickname"]
-    password = req.GET["password"]
+    nickname = json.loads(req.body)["nickname"]
+    password = json.loads(req.body)["password"]
     id_check = len(UserModel.objects.filter(user_nickname=nickname)) == 0
     password_check = len(UserModel.objects.filter(user_nickname=nickname, user_password=password)) == 0
     

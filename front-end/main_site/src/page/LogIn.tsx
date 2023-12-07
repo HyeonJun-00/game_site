@@ -21,11 +21,9 @@ const LogIn = ({logIn, setCreateIDClass, loginCookie}:state) => {
     }
     const userLogIn = async () => {
         try {
-            const response = await axios.get('http://kkms4001.iptime.org:10096/user_login/', {
-                params: {
+            const response = await axios.post('http://kkms4001.iptime.org:10096/user_login/', {
                     nickname:userID,
                     password:userPW
-                }
             });
             const resData = response.data;
             if (resData === "id is null") {
