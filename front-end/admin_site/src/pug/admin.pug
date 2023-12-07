@@ -36,6 +36,7 @@ html(lang="ko")
                             p 게임 태그
                             p 등록일
                             p view
+                            button#addGameButton 추가
                     div.tableBox
                         - for(let i = 0; i < 2; i++) 
                             div
@@ -47,4 +48,5 @@ html(lang="ko")
                                     button 설명
                                     button 수정
                                     button 삭제
+            div#gameAddBox
     script(src="./js/admin.js") 

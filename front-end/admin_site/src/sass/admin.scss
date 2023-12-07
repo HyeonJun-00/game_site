@@ -9,7 +9,20 @@ body {
     background-color: #0a2248;
 }
 
+    #gameAddBox {
+        position: absolute;
+        z-index: 100;
+        height: 50.5rem;
+        width: 70.5rem;
+        left: 50%;
+        top: 50%;
+        border-radius: 2rem;
+        transform: translate(-50%, -50%);
+        background-color: #fff;
+        border: 1px solid #B0B0B0;
+    }
 body>section {
+    position: relative;
     margin-left: 50%;
     transform: translate(-50%, 0);
     display: block;
@@ -53,7 +66,6 @@ body>section {
                     overflow-y: scroll;
                     height: calc(90% - 5rem);
                     width: 104.5rem;
-
                     &:first-child {
                         overflow: hidden;
                         display: flex;
@@ -61,6 +73,21 @@ body>section {
                         height: 5rem;
 
                         &>div {
+                            width: 104.5rem;
+                            &>#addGameButton {
+                                cursor: pointer;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                border: 0;
+                                border-radius: .5rem;
+                                width: 15rem;
+                                right: 0;
+                                position: absolute;
+                                font-size: 2rem;
+                                color: #FAFAFA;
+                                background-color:#2C17A9;
+                            }
                             &:nth-child(1) {
                                 background-color: #FFFFFF;
                                 & > p {
