@@ -122,6 +122,8 @@ class GameAdmin {
     //         },
     //     });
     // }
+    
+    $("#addGameButton").on("click", () => $("#gameAddBox").addClass("displayFlag"));
     const userAdmin = new UserAdmin();
     const gameAdmin = new GameAdmin();
     userAdmin.getUserList();
