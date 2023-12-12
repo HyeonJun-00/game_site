@@ -4,27 +4,83 @@
     font-size: 10px;
     font-family: 'Noto Sans KR', sans-serif;
 }
-
+input, textarea {
+    font-size: 1.6rem;
+    outline: none;
+}
 body {
     background-color: #0a2248;
 }
 
-    #gameAddBox {
-        display: none;
-        position: absolute;
-        z-index: 100;
-        height: 50.5rem;
-        width: 70.5rem;
-        left: 50%;
-        top: 50%;
-        border-radius: 2rem;
-        transform: translate(-50%, -50%);
-        background-color: #fff;
-        border: 1px solid #B0B0B0;
-        &.displayFlag {
-            display: block;
+#gameAddBox {
+    display: none;
+    position: absolute;
+    z-index: 100;
+    height: 50.5rem;
+    width: 70.5rem;
+    left: 50%;
+    top: 50%;
+    border-radius: 2rem;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border: 1px solid #B0B0B0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    &.displayFlag {
+        display: flex;
+    }
+    & > div {
+        width: 60rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 1rem;
+        &.gameDescriptionBox {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+                &.gameButtonBox {
+                    justify-content: flex-end;
+                    &>button {
+                        cursor: pointer;
+                        color: #FAFAFA;
+                        margin-left: .3rem;
+                        background-color: #A91717;
+                        border-radius: .5rem;
+                        font-size: 1.6rem;
+                        //width: 7.3rem;
+                        //height: 4rem;
+                        padding: 1rem 2rem;
+                        border: 0;
+        
+                        &:last-child {
+                            background-color: #2C17A9;
+                        }
+                    }
+        
+                }
+        & > p {
+            font-weight: lighter;
+            display: flex;
+            align-items: center;
+            font-size: 2.4rem;
+        }
+        & > input {
+            border: 1px solid #777;
+            width: 46rem;
+            height: 2.9rem;
+        }
+        & > textarea {
+            margin-top: 1.1rem;
+            width: 100%;
+            border: 1px solid #777;
+            height: 22rem;
+            resize: none;
         }
     }
+}
+
 body>section {
     position: relative;
     margin-left: 50%;
@@ -70,6 +126,7 @@ body>section {
                     overflow-y: scroll;
                     height: calc(90% - 5rem);
                     width: 104.5rem;
+
                     &:first-child {
                         overflow: hidden;
                         display: flex;
@@ -78,6 +135,7 @@ body>section {
 
                         &>div {
                             width: 104.5rem;
+
                             &>#addGameButton {
                                 cursor: pointer;
                                 display: flex;
@@ -90,11 +148,13 @@ body>section {
                                 position: absolute;
                                 font-size: 2rem;
                                 color: #FAFAFA;
-                                background-color:#2C17A9;
+                                background-color: #2C17A9;
                             }
+
                             &:nth-child(1) {
                                 background-color: #FFFFFF;
-                                & > p {
+
+                                &>p {
                                     font-size: 2.4rem;
                                 }
                             }
@@ -107,7 +167,7 @@ body>section {
                         align-items: center;
                         height: 3.5rem;
 
-                        & > .viewBox {
+                        &>.viewBox {
                             z-index: 2;
                             position: relative;
                             overflow: hidden;
@@ -115,7 +175,8 @@ body>section {
                             border-radius: 5rem;
                             height: 2rem;
                             width: 4.5rem;
-                            & > .viewOnOff {
+
+                            &>.viewOnOff {
                                 cursor: pointer;
                                 transition: all .2s;
                                 left: calc(100% - 2rem);
@@ -127,6 +188,7 @@ body>section {
                                 border: 1px solid #222;
                                 width: 2rem;
                                 height: 2rem;
+
                                 &::after {
                                     margin-left: 1rem;
                                     position: absolute;
@@ -136,6 +198,7 @@ body>section {
                                     background-color: #bababae9;
                                     content: "";
                                 }
+
                                 &::before {
                                     margin-left: -1rem;
                                     transform: translate(calc(-100% + 2rem), 0);
@@ -146,18 +209,21 @@ body>section {
                                     background-color: #2C17A9;
                                     content: "";
                                 }
+
                                 &.turnOff {
                                     left: 0;
                                 }
                             }
                         }
-                        & > .buttonBox {
+
+                        &>.buttonBox {
                             display: flex;
                             align-items: center;
                             height: 100%;
                             right: 0;
                             position: absolute;
-                            & > button {
+
+                            &>button {
                                 cursor: pointer;
                                 color: #FAFAFA;
                                 margin-right: .3rem;
@@ -167,21 +233,25 @@ body>section {
                                 width: 7.3rem;
                                 height: 3rem;
                                 border: 0;
+
                                 &:last-child {
                                     background-color: #A91717;
                                 }
                             }
                         }
+
                         &>p {
                             height: 100%;
                             width: 24.3rem;
                             font-size: 1.6rem;
                             display: flex;
                             align-items: center;
+
                             &:nth-child(4) {
                                 width: 6rem;
                             }
                         }
+
                         &:nth-child(odd) {
                             background-color: #E3E3E3;
                         }

@@ -4,6 +4,10 @@
   font-size: 10px;
   font-family: 'Noto Sans KR', sans-serif; }
 
+input, textarea {
+  font-size: 1.6rem;
+  outline: none; }
+
 body {
   background-color: #0a2248; }
 
@@ -18,9 +22,49 @@ body {
   border-radius: 2rem;
   transform: translate(-50%, -50%);
   background-color: #fff;
-  border: 1px solid #B0B0B0; }
+  border: 1px solid #B0B0B0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; }
   #gameAddBox.displayFlag {
-    display: block; }
+    display: flex; }
+  #gameAddBox > div {
+    width: 60rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1rem; }
+    #gameAddBox > div.gameDescriptionBox {
+      flex-direction: column;
+      align-items: flex-start; }
+    #gameAddBox > div.gameButtonBox {
+      justify-content: flex-end; }
+      #gameAddBox > div.gameButtonBox > button {
+        cursor: pointer;
+        color: #FAFAFA;
+        margin-left: .3rem;
+        background-color: #A91717;
+        border-radius: .5rem;
+        font-size: 1.6rem;
+        padding: 1rem 2rem;
+        border: 0; }
+        #gameAddBox > div.gameButtonBox > button:last-child {
+          background-color: #2C17A9; }
+    #gameAddBox > div > p {
+      font-weight: lighter;
+      display: flex;
+      align-items: center;
+      font-size: 2.4rem; }
+    #gameAddBox > div > input {
+      border: 1px solid #777;
+      width: 46rem;
+      height: 2.9rem; }
+    #gameAddBox > div > textarea {
+      margin-top: 1.1rem;
+      width: 100%;
+      border: 1px solid #777;
+      height: 22rem;
+      resize: none; }
 
 body > section {
   position: relative;
