@@ -64,6 +64,9 @@ class GameAdmin {
         $(".gameDeleteButton").on("click", (e) => this.deleteGame(e));
         $(".viewOnOff").on("click", (e) => this.patchView(e) );
     }
+    addGame(e) {
+        $("#gameCancelButton")
+    }
     patchView(e) {
         const targetID = $(e.target).attr("data-id");
         const targetView = $(e.target).attr("data-view") !== "true";
@@ -124,6 +127,7 @@ class GameAdmin {
     // }
     
     $("#addGameButton").on("click", () => $("#gameAddBox").addClass("displayFlag"));
+    $("#gameCancelButton").on("click", () => $("#gameAddBox").removeClass("displayFlag"));
     const userAdmin = new UserAdmin();
     const gameAdmin = new GameAdmin();
     userAdmin.getUserList();
