@@ -60,11 +60,8 @@ class Game(View):
         GameModel.objects.create(game_name=game_name, game_description=game_description, game_tag=game_tag)
         return HttpResponse(status=200)
     
-    def put(self, req):
-        game_name = req.GET["name"]
-        game_description = req.GET["description"]
-        game_tag = req.GET["tag"]
-        GameModel.objects.filter(game_name=game_name).update(game_name=game_name, game_description=game_description, game_tag=game_tag)
+    def put(self, req, id, name, tag, description):
+        GameModel.objects.filter(id=id).update(game_name=name, game_description=description, game_tag=tag)
         return HttpResponse(status=200)
 
 def user_login(req):

@@ -24,4 +24,5 @@ urlpatterns = [
     path('game/', views.Game.as_view()),
     path('game/<int:id>/', views.Game.as_view()),
     path('game/<int:id>/<view>/', views.Game.as_view()),
+    path('game/<int:id>/<name>/<tag>/<description>/', views.Game.as_view()),
 ]

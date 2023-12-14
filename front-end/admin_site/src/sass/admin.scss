@@ -4,15 +4,18 @@
     font-size: 10px;
     font-family: 'Noto Sans KR', sans-serif;
 }
-input, textarea {
+
+input,
+textarea {
     font-size: 1.6rem;
     outline: none;
 }
+
 body {
     background-color: #0a2248;
 }
 
-#gameAddBox {
+#descriptionBox {
     display: none;
     position: absolute;
     z-index: 100;
@@ -27,51 +30,107 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
+    &>#gameDescription {
+        font-size: 1.6rem;
+        border: 1px solid bisque;
+        height: 38rem;
+        white-space: pre;
+    }
+
+    &>div {
+        width: 59rem;
+        &:nth-child(2) {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        &>button {
+            cursor: pointer;
+            color: #FAFAFA;
+            margin-left: .3rem;
+            border-radius: .5rem;
+            font-size: 1.6rem;
+            background-color: #2C17A9;
+            padding: 1rem 2rem;
+            border: 0;
+        }
+    }
+
     &.displayFlag {
         display: flex;
     }
-    & > div {
+}
+
+#gameAddBox,
+#gameEditBox {
+    display: none;
+    position: absolute;
+    z-index: 100;
+    height: 50.5rem;
+    width: 70.5rem;
+    left: 50%;
+    top: 50%;
+    border-radius: 2rem;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border: 1px solid #B0B0B0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    &.displayFlag {
+        display: flex;
+    }
+
+    &>div {
         width: 60rem;
         display: inline-flex;
         align-items: center;
         justify-content: space-between;
         margin: 1rem;
+
         &.gameDescriptionBox {
             flex-direction: column;
             align-items: flex-start;
         }
-                &.gameButtonBox {
-                    justify-content: flex-end;
-                    &>button {
-                        cursor: pointer;
-                        color: #FAFAFA;
-                        margin-left: .3rem;
-                        background-color: #A91717;
-                        border-radius: .5rem;
-                        font-size: 1.6rem;
-                        //width: 7.3rem;
-                        //height: 4rem;
-                        padding: 1rem 2rem;
-                        border: 0;
-        
-                        &:last-child {
-                            background-color: #2C17A9;
-                        }
-                    }
-        
+
+        &.gameButtonBox {
+            justify-content: flex-end;
+
+            &>button {
+                cursor: pointer;
+                color: #FAFAFA;
+                margin-left: .3rem;
+                background-color: #A91717;
+                border-radius: .5rem;
+                font-size: 1.6rem;
+                //width: 7.3rem;
+                //height: 4rem;
+                padding: 1rem 2rem;
+                border: 0;
+
+                &:last-child {
+                    background-color: #2C17A9;
                 }
-        & > p {
+            }
+
+        }
+
+        &>p {
             font-weight: lighter;
             display: flex;
             align-items: center;
             font-size: 2.4rem;
         }
-        & > input {
+
+        &>input {
             border: 1px solid #777;
             width: 46rem;
             height: 2.9rem;
         }
-        & > textarea {
+
+        &>textarea {
             margin-top: 1.1rem;
             width: 100%;
             border: 1px solid #777;
@@ -222,6 +281,10 @@ body>section {
                             height: 100%;
                             right: 0;
                             position: absolute;
+
+                            &>div {
+                                display: none;
+                            }
 
                             &>button {
                                 cursor: pointer;

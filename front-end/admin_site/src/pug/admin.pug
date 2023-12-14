@@ -20,13 +20,6 @@ html(lang="ko")
                             p 유저 이메일
                             p 가입일
                     div.tableBox
-                        - for(let i = 0; i < 0; i++) 
-                            div
-                                - for(let i = 0; i < 3; i++)
-                                    p a
-                                div.buttonBox
-                                    button 수정
-                                    button 삭제
             article 
                 div 게임 테이블
                 div.gameTable 
@@ -38,16 +31,6 @@ html(lang="ko")
                             p view
                             button#addGameButton 추가
                     div.tableBox
-                        - for(let i = 0; i < 2; i++) 
-                            div
-                                - for(let i = 0; i < 3; i++)
-                                    p 
-                                div.viewBox
-                                    div.viewOnOff
-                                div.buttonBox
-                                    button 설명
-                                    button 수정
-                                    button 삭제
             div#gameAddBox
                 div.gameNameBox
                     p 게임 이름
@@ -59,6 +42,25 @@ html(lang="ko")
                     p 게임 설명
                     textarea 
                 div.gameButtonBox
-                    button#gameCancelButton 취소
-                    button 저장
+                    button.gameCancelButton 취소
+                    button#gameCreateButton 저장
+
+            div#gameEditBox(data-id)
+                div.gameNameBox
+                    p 게임 이름
+                    input(type="text")
+                div.gameTagBox
+                    p 게임 태그
+                    input(type="text")
+                div.gameDescriptionBox
+                    p 게임 설명
+                    textarea 
+                div.gameButtonBox
+                    button.gameCancelButton 취소
+                    button#gameEditButton 저장
+
+            div#descriptionBox
+                div#gameDescription
+                div
+                    button 확인
     script(src="./js/admin.js") 
