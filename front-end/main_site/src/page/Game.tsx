@@ -1,6 +1,6 @@
 import './scss/Game.scss';
 
-const Game = ({}:{[key:string]:any}) => {
+const Game = ({nowGame, user}:{[key:string]:any}) => {
 
     return (
         <article className='Game'>

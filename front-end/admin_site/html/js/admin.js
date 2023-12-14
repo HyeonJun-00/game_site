@@ -32,7 +32,7 @@ class UserAdmin {
 
         if (confirm("정말 삭제 하겠습니까?")) {
             $.ajax({
-                url: `http://kkms4001.iptime.org:10096/user/${euc(targetID)}/`,
+                url: `http://kkms4001.iptime.org:10096/user/${targetID}/`,
                 type: "delete",
                 success: (data) => {
                     this.getUserList();
@@ -94,9 +94,9 @@ class GameAdmin {
             url: "http://kkms4001.iptime.org:10096/game/",
             type: "post",
             data: {
-                "name": euc(gameName),
-                "tag": euc(gameTag),
-                "description": euc(gameDescription),
+                "name": gameName,
+                "tag": gameTag,
+                "description": gameDescription,
             },
             success: (data) => {
                 this.getGameList();
@@ -106,7 +106,7 @@ class GameAdmin {
     updateGame(e) {
         const gameName = $("#gameEditBox .gameNameBox > input").val();
         const gameTag = $("#gameEditBox .gameTagBox > input").val();
-        const gameDescription = $("#gameEditBox .gameDescriptionBox > textarea").val();
+        const gameDescription = $("#gameEditBox .gameDescriptionBox > textarea").val().split("\n").join("@#@");
         const gameID = $("#gameEditBox").attr("data-id");
 
         if (gameName.trim() === "" || gameTag.trim() === "" || gameDescription.trim() === "") {return ;}
@@ -123,7 +123,7 @@ class GameAdmin {
         const targetView = $(e.target).attr("data-view") !== "true";
 
         $.ajax({
-            url: `http://kkms4001.iptime.org:10096/game/${euc(targetID)}/${euc(targetView)}/`,
+            url: `http://kkms4001.iptime.org:10096/game/${targetID}/${targetView}/`,
             type: "patch",
             success: (data) => {
                 $(e.target).attr("data-view", `${targetView}`);
@@ -144,7 +144,7 @@ class GameAdmin {
         const targetID = $(e.target).val();
         if (confirm("정말 삭제 하겠습니까?")) {
             $.ajax({
-                url: `http://kkms4001.iptime.org:10096/game/${euc(targetID)}/`,
+                url: `http://kkms4001.iptime.org:10096/game/${targetID}/`,
                 type: "delete",
                 success: (data) => {
                     this.getGameList();

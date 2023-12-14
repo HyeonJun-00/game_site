@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 interface game {
     gameName: string;
     gameLink: string;
+    gameDescription: string;
+    gameID: Number;
 }
 interface tag {
     [key: string]: game[];
@@ -12,22 +14,8 @@ interface tag {
 interface see {
     [key: string]: string;
 }
-const GameSelectionSection = ({setGame}:{[key:string]:any}) => {
+const GameSelectionSection = ({setGame, gameObject}:{[key:string]: any, gameObject : tag}) => {
 
-    const gameObject : tag = {
-        "전체 게임": [
-            {
-                gameName: "고군분투",
-                gameLink: "",
-            },
-        ],
-        "보드 게임": [
-            { 
-                gameName: "고군분투", 
-                gameLink: "" ,
-            },
-        ]
-    };
     const articleList:any = [];
     const [seeMore, setSeeMore] = useState<see>({});
 
@@ -36,7 +24,7 @@ const GameSelectionSection = ({setGame}:{[key:string]:any}) => {
         const seeMoreString:string = seeMore[gameName] !== "heightFlag" ? "+ 더 보기" : "- 접기";
         const gameList: any = gameObject[gameName].map((v, i) => {
             return (
-                <Link to={`game/`} key={Math.random()} onClick={() => setGame(v.gameName)}>
+                <Link to={`game/`} key={Math.random()} onClick={() => setGame(v)}>
                     <img alt='' src={v.gameLink}></img>
                     <p>{v.gameName}</p>
                 </Link>

@@ -61,7 +61,7 @@ class Game(View):
         return HttpResponse(status=200)
     
     def put(self, req, id, name, tag, description):
-        GameModel.objects.filter(id=id).update(game_name=name, game_description=description, game_tag=tag)
+        GameModel.objects.filter(id=id).update(game_name=name, game_description="\n".join(description.split("@#@")), game_tag=tag)
         return HttpResponse(status=200)
 
 def user_login(req):
