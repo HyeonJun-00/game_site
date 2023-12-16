@@ -1,5 +1,6 @@
 import './page/scss/App.scss';
 import TopSection from './page/TopSection';
+import BottomSection from './page/BottomSection';
 import GameSelectionSection from './page/GameSelectionSection';
 import GamePlaySection from './page/GamePlaySection';
 import axios from 'axios';
@@ -69,6 +70,7 @@ const App = () => {
         <Route path='/' element={<GameSelectionSection setGame={setGame} gameObject={gameObject} />}></Route>
         <Route path='game/' element={<GamePlaySection thisGame={[nowGame, setGame]} user={user} />}></Route>
       </Routes>
+      <BottomSection></BottomSection>
     </div>
   );
 }
