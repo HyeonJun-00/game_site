@@ -19,6 +19,7 @@ html(lang="ko")
                             p 유저 닉네임
                             p 유저 이메일
                             p 가입일
+                            p 권한
                     div.tableBox
             article 
                 div 게임 테이블
@@ -33,28 +34,34 @@ html(lang="ko")
                     div.tableBox
             div#gameAddBox
                 div.gameNameBox
-                    p 게임 이름
+                    p 이름
+                    input(type="text")
+                div.gameEnglishNameBox
+                    p 영문 이름
                     input(type="text")
                 div.gameTagBox
-                    p 게임 태그
+                    p 태그
                     input(type="text")
                 div.gameDescriptionBox
-                    p 게임 설명
-                    textarea 
+                    p 설명
+                    textarea
                 div.gameButtonBox
                     button.gameCancelButton 취소
                     button#gameCreateButton 저장
 
             div#gameEditBox(data-id)
                 div.gameNameBox
-                    p 게임 이름
+                    p 이름
+                    input(type="text")
+                div.gameEnglishNameBox
+                    p 영문 이름
                     input(type="text")
                 div.gameTagBox
-                    p 게임 태그
+                    p 태그
                     input(type="text")
                 div.gameDescriptionBox
-                    p 게임 설명
-                    textarea 
+                    p 설명
+                    textarea
                 div.gameButtonBox
                     button.gameCancelButton 취소
                     button#gameEditButton 저장

@@ -9,13 +9,18 @@ class User(View):
         for user in UserModel.objects.all():
             user_list.append(
                 {
-                    "no" : user.id,
-                    "nickname":user.user_nickname,
-                    "email":user.user_email,
+                    "no": user.id,
+                    "nickname": user.user_nickname,
+                    "email": user.user_email,
+                    "rermissions": user.user_rermissions,
                     "created":str(user.created_date.date())
                 }
             )
         return HttpResponse(json.dumps(user_list))
+    
+    def patch(self, req, id, rermissions):
+        UserModel.objects.filter(id=id).update(user_rermissions=rermissions)
+        return HttpResponse(status=200)
     
     def delete(self, req, id):
         UserModel.objects.get(id=id).delete()
@@ -34,12 +39,13 @@ class Game(View):
         for game in GameModel.objects.all():
             game_list.append(
                 {
-                    "id" : game.id,
+                    "id": game.id,
                     "name": game.game_name,
                     "view": game.game_view,
                     "tag": game.game_tag,
                     "description": game.game_description,
-                    "created":str(game.created_date.date()),
+                    "english": game.game_english_name,
+                    "created": str(game.created_date.date()),
                 }
             )
         return HttpResponse(json.dumps(game_list))
@@ -57,11 +63,12 @@ class Game(View):
         game_name = req.POST["name"]
         game_description = req.POST["description"]
         game_tag = req.POST["tag"]
-        GameModel.objects.create(game_name=game_name, game_description=game_description, game_tag=game_tag)
+        game_english_name = req.POST["english_name"]
+        GameModel.objects.create(game_name=game_name, game_description=game_description, game_tag=game_tag, game_english_name=game_english_name)
         return HttpResponse(status=200)
     
-    def put(self, req, id, name, tag, description):
-        GameModel.objects.filter(id=id).update(game_name=name, game_description="\n".join(description.split("@#@")), game_tag=tag)
+    def put(self, req, id, name, tag, description, english_name):
+        GameModel.objects.filter(id=id).update(game_name=name, game_description="\n".join(description.split("@#@")), game_tag=tag, game_english_name=english_name)
         return HttpResponse(status=200)
 
 def user_login(req):

@@ -19,10 +19,11 @@ from game_app import views
 urlpatterns = [
     path('user/', views.User.as_view()),
     path('user/<int:id>/', views.User.as_view()),
+    path('user/<int:id>/<str:rermissions>/', views.User.as_view()),
     path('nickname_duplicate_check/', views.nickname_duplicate_check),
     path('user_login/', views.user_login),
     path('game/', views.Game.as_view()),
     path('game/<int:id>/', views.Game.as_view()),
     path('game/<int:id>/<view>/', views.Game.as_view()),
-    path('game/<int:id>/<name>/<tag>/<str:description>/', views.Game.as_view()),
+    path('game/<int:id>/<str:name>/<str:tag>/<str:description>/<str:english_name>/', views.Game.as_view()),
 ]

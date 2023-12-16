@@ -9,14 +9,30 @@ class UserAdmin {
                     <p>${v.nickname}</p>
                     <p>${v.email}</p>
                     <p>${v.created}</p>
+                    <select class="changeRermissions" name="권한" placeholder="권한" value="${v.rermissions}" data-id="${v.no}">
+                        <option value="${v.rermissions}" selected disabled hidden>${v.rermissions}</option>
+                        <option value="normal">normal</option>
+                        <option value="admin">admin</option>
+                    </select>
                     <div class="buttonBox">
                         <button class="deleteButton" value="${v.no}">삭제</button>
                     </div>
                 </div>`
             );
         });
-        //<button class="updateButton" value="${v.no}">수정</button>
+        $(".changeRermissions").on("change", (e) => {
+            this.patchRermissions(e);
+        });
         $(".deleteButton").on("click", (e) => this.deleteUser(e));
+    }
+    patchRermissions(e) {
+        const targetID = $(e.target).attr("data-id");
+        const nowRermissions = $(e.target).val();
+
+        $.ajax({
+            url: `http://kkms4001.iptime.org:10096/user/${targetID}/${nowRermissions}/`,
+            type: "patch",
+        });
     }
     getUserList() {
         $.ajax({
@@ -46,10 +62,10 @@ class GameAdmin {
     printGameList(userList = []) {
         $(".gameTable .tableBox").html("");
         userList.forEach(v => {
-            console.log(v.view === true);
+            console.log(v.english);
             $(".gameTable .tableBox").append(`
             <div class="gameContent">
-                <p class="thisGameName">${v.name}</p>
+                <p class="thisGameName" data-english-name="${v.english}">${v.name}</p>
                 <p class="thisGameTag">${v.tag}</p>
                 <p>${v.created}</p>
                 <div class="viewBox">
@@ -74,11 +90,13 @@ class GameAdmin {
         $(".gameEditButton").on("click", (e) => {
             const targetGame = $(e.target).closest('.gameContent');
             const gameName = targetGame.find(".thisGameName").text();
+            const englishName = targetGame.find(".thisGameName").attr("data-english-name");
             const gameTag = targetGame.find(".thisGameTag").text();
             const gameDescription = targetGame.find(".buttonBox > div").text();
 
             $("#gameEditBox").attr("data-id", e.target.value);
             $("#gameEditBox > .gameNameBox > input").val(gameName);
+            $("#gameEditBox > .gameEnglishNameBox > input").val(englishName);
             $("#gameEditBox > .gameTagBox > input").val(gameTag);
             $("#gameEditBox > .gameDescriptionBox > textarea").val(gameDescription);
             $("#gameEditBox").addClass("displayFlag");
@@ -87,6 +105,7 @@ class GameAdmin {
     createGame() {
         const gameName = $("#gameAddBox .gameNameBox > input").val();
         const gameTag = $("#gameAddBox .gameTagBox > input").val();
+        const englishName = $("#gameAddBox .gameEnglishNameBox > input").val();
         const gameDescription = $("#gameAddBox .gameDescriptionBox > textarea").val();
 
         if (gameName.trim() === "" || gameTag.trim() === "" || gameDescription.trim() === "") {return ;}
@@ -97,6 +116,7 @@ class GameAdmin {
                 "name": gameName,
                 "tag": gameTag,
                 "description": gameDescription,
+                "english_name": englishName,
             },
             success: (data) => {
                 this.getGameList();
@@ -105,13 +125,14 @@ class GameAdmin {
     }
     updateGame(e) {
         const gameName = $("#gameEditBox .gameNameBox > input").val();
+        const englishName = $("#gameEditBox .gameEnglishNameBox > input").val();
         const gameTag = $("#gameEditBox .gameTagBox > input").val();
         const gameDescription = $("#gameEditBox .gameDescriptionBox > textarea").val().split("\n").join("@#@");
         const gameID = $("#gameEditBox").attr("data-id");
 
         if (gameName.trim() === "" || gameTag.trim() === "" || gameDescription.trim() === "") {return ;}
         $.ajax({
-            url: `http://kkms4001.iptime.org:10096/game/${euc(gameID)}/${euc(gameName)}/${euc(gameTag)}/${euc(gameDescription)}/`,
+            url: `http://kkms4001.iptime.org:10096/game/${euc(gameID)}/${euc(gameName)}/${euc(gameTag)}/${euc(gameDescription)}/${euc(englishName)}/`,
             type: "put",
             success: (data) => {
                 this.getGameList();

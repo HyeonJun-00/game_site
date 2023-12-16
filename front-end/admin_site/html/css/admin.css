@@ -100,12 +100,13 @@ body {
       font-weight: lighter;
       display: flex;
       align-items: center;
-      font-size: 2.4rem; }
+      font-size: 2rem; }
     #gameAddBox > div > input,
     #gameEditBox > div > input {
       border: 1px solid #777;
       width: 46rem;
-      height: 2.9rem; }
+      height: 2rem;
+      padding-left: .5rem; }
     #gameAddBox > div > textarea,
     #gameEditBox > div > textarea {
       margin-top: 1.1rem;
@@ -178,6 +179,13 @@ body > section {
             display: flex;
             align-items: center;
             height: 3.5rem; }
+            body > section article > div:nth-child(2) > div > div > select {
+              font-size: 1.6rem;
+              background-color: transparent;
+              outline: none;
+              border: 0; }
+              body > section article > div:nth-child(2) > div > div > select > option {
+                font-size: 1.4rem; }
             body > section article > div:nth-child(2) > div > div > .viewBox {
               z-index: 2;
               position: relative;
