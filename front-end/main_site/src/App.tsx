@@ -10,7 +10,7 @@ import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 
 interface game {
   gameName: string;
-  gameLink: string;
+  gameSrc: string;
   gameDescription: string;
   gameID: Number;
 }
@@ -23,8 +23,15 @@ const App = () => {
   const [gameObject, setGameObjet] = useState<tag>({});
   const [user, setUser] = useState(cookies.id || `손님${new Date().getTime() % 1000000}`);
   const [nowGame, setGame] = useState("");
+  const [inGame, setIngame] = useState("");
   const locationPathname = useLocation().pathname;
   const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    if (locationPathname !== "/") { setIngame("inGame"); }
+    else { setIngame(""); }
+  }, [locationPathname]);
 
   useEffect(() => {
     if (locationPathname !== "/" && nowGame === "") {
@@ -44,6 +51,7 @@ const App = () => {
           const gameName = v.name;
           const gameID = v.id;
           const gameDescription = v.description;
+          const gameSrc = v.english;
 
           gameTag.forEach((v: string) => {
             if (v === "") { return; }
@@ -51,9 +59,9 @@ const App = () => {
               tempObject[`${v} 게임`] = [];
             }
             if (!tempObject["전체 게임"].some((v: { gameName: string;}) => v.gameName === gameName)) {
-              tempObject["전체 게임"].push({ gameName, gameID, gameDescription });
+              tempObject["전체 게임"].push({ gameName, gameID, gameDescription, gameSrc });
             }
-            tempObject[`${v} 게임`].push({ gameName, gameID, gameDescription });
+            tempObject[`${v} 게임`].push({ gameName, gameID, gameDescription, gameSrc });
           });
         });
         setGameObjet(tempObject);
@@ -65,7 +73,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <TopSection loginCookie={[cookies, setCookie, removeCookie, setUser]} user={user}></TopSection>
+      <TopSection inGame={inGame} loginCookie={[cookies, setCookie, removeCookie, setUser]} user={user}></TopSection>
       <Routes>
         <Route path='/' element={<GameSelectionSection setGame={setGame} gameObject={gameObject} />}></Route>
         <Route path='game/' element={<GamePlaySection thisGame={[nowGame, setGame]} user={user} />}></Route>

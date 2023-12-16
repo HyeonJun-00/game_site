@@ -7,15 +7,17 @@ import { useCookies } from 'react-cookie';
 
 interface state {
     user : string;
-    loginCookie:any
+    loginCookie:any;
+    inGame:string;
 }
 
-const TopSection = ({user, loginCookie}: state) => {
+const TopSection = ({inGame, user, loginCookie}: state) => {
     const [cookies, setCookie, removeCookie, setUser] = loginCookie;
     const [logInClass, setLogInClass] = useState("");
     const [createIDClass, setCreateIDClass] = useState("");
     const [userBoxClass, setFlag] = useState("");
     const [userBox, setUserBox] = useState(<></>);
+    const [profileImg, setProfileImg] = useState("guest_profile");
     const profileClickEvnet = () => {
         if (cookies.id === undefined) {setLogInClass("displayFlag");} 
         else if (userBoxClass === "") { setFlag("displayFlag"); }
@@ -23,8 +25,10 @@ const TopSection = ({user, loginCookie}: state) => {
     };
     useEffect(() => {
         if (cookies.id === undefined) {
+            setProfileImg("guest_profile");
             setUserBox(<></>);
         } else {
+            setProfileImg("user_profile");
             setUserBox(
                 <>
                     <li key={Math.random()} onClick={() => {
@@ -44,7 +48,7 @@ const TopSection = ({user, loginCookie}: state) => {
     }, [user]);
 
     return (
-        <section className='TopSection'>
+        <section className={`TopSection ${inGame}`}>
             <article className='topContentArticle'>
                 <div className='topLeftBox'>
                     <Link to="/">
@@ -59,7 +63,7 @@ const TopSection = ({user, loginCookie}: state) => {
                 </div>
                 <div className='topRightBox'>
                     <p onClick={() => profileClickEvnet()}>{user+"님"}</p>
-                    <img id='profile' src={`${process.env.PUBLIC_URL}/images/guest_profile.png`} alt='profile' onClick={() => profileClickEvnet()}></img>
+                    <img id='profile' src={`${process.env.PUBLIC_URL}/images/${profileImg}.png`} alt='profile' onClick={() => profileClickEvnet()}></img>
                     <ul id='userBox' className={userBoxClass}>
                         {userBox}
                     </ul>

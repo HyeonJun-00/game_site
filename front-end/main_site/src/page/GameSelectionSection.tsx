@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 interface game {
     gameName: string;
-    gameLink: string;
+    gameSrc: string;
     gameDescription: string;
     gameID: Number;
 }
@@ -25,7 +25,7 @@ const GameSelectionSection = ({setGame, gameObject}:{[key:string]: any, gameObje
         const gameList: any = gameObject[gameName].map((v, i) => {
             return (
                 <Link to={`game/`} key={Math.random()} onClick={() => setGame(v)}>
-                    <img alt='' src={v.gameLink}></img>
+                    <img alt='' src={`${process.env.PUBLIC_URL}/images/game_main_images/${v.gameSrc}.jpg`}></img>
                     <p>{v.gameName}</p>
                 </Link>
             );
