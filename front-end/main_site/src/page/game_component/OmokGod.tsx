@@ -1,4 +1,4 @@
-//import './scss/OmokGod.scss';
+import './scss/OmokGod.scss';
 
 const OmokGod = ({nowGame, user}:{[key:string]:any}) => {
 
