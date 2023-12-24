@@ -2,6 +2,29 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import "./scss/ShootingCat.scss";
 
 const gameImageSrc = `${process.env.PUBLIC_URL}/images/shooting_cat`;
+const gameSoundSrc = `${process.env.PUBLIC_URL}/sounds/shooting_cat`;
+
+class Sound {
+    static mainSound = 1;
+    static attackSound = 1;
+    static backgroundSound = new Audio(`${gameSoundSrc}/background.mp3`);
+    static hoverEvent = () => {
+        const hoverSound = new Audio(`${gameSoundSrc}/hover.mp3`);
+        hoverSound.volume = .2;
+        hoverSound.load();
+        hoverSound.play();
+    };
+    static backgroundSoundPlay() {
+        Sound.backgroundSound.autoplay = true;
+        Sound.backgroundSound.loop = true;
+        Sound.backgroundSound.volume = 0.2;
+        Sound.backgroundSound.load();
+    }
+    static backgroundSoundStop() {
+        Sound.backgroundSound.pause();
+        Sound.backgroundSound.currentTime = 0;
+    }
+}
 
 class Fish {
     private _x: number;
@@ -9,7 +32,7 @@ class Fish {
     private _fishAlive: boolean;
     private _fishImage: CanvasImageSource;
 
-    constructor(startX:number, startY:number) {
+    constructor(startX: number, startY: number) {
         this._x = startX;
         this._y = startY;
         this._fishAlive = true;
@@ -22,7 +45,7 @@ class Fish {
     get Y() {
         return this._y;
     }
-    set fishAlive(initBool:boolean) {
+    set fishAlive(initBool: boolean) {
         this._fishAlive = initBool;
     }
     get fishAlive() {
@@ -40,12 +63,16 @@ class Villain {
     private _x: number;
     private _y: number;
     private _villainImage: CanvasImageSource;
+    private _attackSound: HTMLAudioElement;
 
     constructor() {
         this._x = Math.floor(Math.random() * 461);
         this._y = 0;
-		this._villainImage = new Image();
-		this._villainImage.src = `${gameImageSrc}/Villain.png`;
+        this._villainImage = new Image();
+        this._attackSound = new Audio(`${gameSoundSrc}/attack.mp3`);
+
+        this._villainImage.src = `${gameImageSrc}/Villain.png`;
+        this._attackSound.volume = .3;
     }
     get X() {
         return this._x;
@@ -56,6 +83,10 @@ class Villain {
     get getImg() {
         return this._villainImage;
     }
+    attackSoundRun() {
+        this._attackSound.load();
+        this._attackSound.play();
+    }
     moveVillain() {
         this._y += 2;
     }
@@ -65,7 +96,7 @@ class BonusLife {
     private _bonusLifeImg: HTMLImageElement;
     private _x: number;
     private _y: number;
-    
+
     constructor() {
         this._x = Math.floor(Math.random() * 461);
         this._y = 0;
@@ -131,16 +162,16 @@ class Cat {
             this._x += 4;
         }
     }
-    set moveToTop(initBool:boolean) {
+    set moveToTop(initBool: boolean) {
         this._moveKeyCheck.ArrowUp = initBool;
     }
-    set moveToBottom(initBool:boolean) {
+    set moveToBottom(initBool: boolean) {
         this._moveKeyCheck.ArrowDown = initBool;
     }
-    set moveToLeft(initBool:boolean) {
+    set moveToLeft(initBool: boolean) {
         this._moveKeyCheck.ArrowLeft = initBool;
     }
-    set moveToRight(initBool:boolean) {
+    set moveToRight(initBool: boolean) {
         this._moveKeyCheck.ArrowRight = initBool;
     }
 }
@@ -164,6 +195,8 @@ class Game {
     private _bonusLifeList: BonusLife[];
     private _createBonusLifeTime: number;
     private _setGameState: Dispatch<SetStateAction<string>>;
+    private _backgroundChangeTime: number;
+    private _time: number;
 
     constructor(setGameState: Dispatch<SetStateAction<string>>) {
         this._setGameState = setGameState;
@@ -172,33 +205,51 @@ class Game {
         this._life = 3;
         this._width = 500;
         this._height = 889;
-        this._cat = new Cat(500, 889);
+        this._time = 0;
         this._villainList = [];
         this._fishList = [];
         this._bonusLifeList = [];
         this._createVillainTime = 0;
         this._createFishTime = 0;
         this._createBonusLifeTime = 0;
+        this._backgroundChangeTime = 0;
+
+        this._cat = new Cat(500, 889);
         this._backgroundImage = new Image();
-        this._gameDisplay = document.getElementById("gameDisplay");
-        this._ctx = (this._gameDisplay as HTMLCanvasElement).getContext("2d");
         this._lifeImg = new Image();
         this._emptyLifeImg = new Image();
+
+        this._gameDisplay = document.getElementById("gameDisplay");
+        this._ctx = (this._gameDisplay as HTMLCanvasElement).getContext("2d");
         this._lifeImg.src = `${gameImageSrc}/life.png`;
         this._emptyLifeImg.src = `${gameImageSrc}/lose_life.png`;
     }
-    set setBackgroundImg(initImg: string) {
+    
+    set backgroundImg(initImg: string) {
         const targetImg = {
             normal: "background1",
+            damage: "background2",
+            bonusLife: "background3"
         }[initImg];
         this._backgroundImage.src = `${gameImageSrc}/${targetImg}.png`;
     }
+
+    changeBackground(changeReason: string) {
+        this._backgroundChangeTime = this._time + 3000;
+        this.backgroundImg = changeReason;
+    }
+
     backgroundRender() {
+        if (this._backgroundChangeTime !== 0 && this._backgroundChangeTime <= this._time) {
+            this.backgroundImg = "normal";
+            this._backgroundChangeTime = 0;
+        }
         (this._ctx !== null) && this._ctx.drawImage(this._backgroundImage, 0, 0, this._width, this._height);
     }
-    villainRender(time: number) {
-        if (this._createVillainTime < time) {
-            this._createVillainTime = time + 480;
+
+    villainRender() {
+        if (this._createVillainTime < this._time) {
+            this._createVillainTime = this._time + 480;
             this._villainList.push(new Villain());
         }
         this._villainList.forEach(villain => {
@@ -206,28 +257,31 @@ class Game {
             villain.moveVillain();
         });
     }
-    fishRender(time: number) {
-        if (this._createFishTime < time) {
-            this._createFishTime = time + 370;
+
+    fishRender() {
+        if (this._createFishTime < this._time) {
+            this._createFishTime = this._time + 370;
             this._fishList.push(new Fish(this._cat.X, this._cat.Y));
         }
-        this._fishList = this._fishList.filter((fish:Fish) => {
+        this._fishList = this._fishList.filter((fish: Fish) => {
             (this._ctx !== null) && this._ctx.drawImage(fish.Img, fish.X, fish.Y, 47, 47);
             fish.moveFish();
             return fish.fishAlive;
         });
     }
-    bonusLifeRender(time: number) {
-        if (this._life < 3 && this._createBonusLifeTime < time) {
+
+    bonusLifeRender() {
+        if (this._life < 3 && this._createBonusLifeTime < this._time) {
             const randomTime = Math.floor(Math.random() * 5000) + 17000;
-            this._createBonusLifeTime = time + randomTime + 10000;
+            this._createBonusLifeTime = this._time + randomTime + 10000;
             setTimeout(() => this._bonusLifeList.push(new BonusLife()), randomTime);
         }
         this._bonusLifeList = this._bonusLifeList.filter((bonusLife: BonusLife) => {
             bonusLife.moveBonusLife();
             (this._ctx !== null) && this._ctx.drawImage(bonusLife.Img, bonusLife.X, bonusLife.Y, 47, 47);
-            if (bonusLife.Y + 60 > this._cat.Y && bonusLife.Y <= this._cat.Y && bonusLife.X >= this._cat.X && bonusLife.X <= this._cat.X + 60) {
+            if (bonusLife.Y + 60 > this._cat.Y && bonusLife.Y <= this._cat.Y && bonusLife.X > this._cat.X - 60 && bonusLife.X < this._cat.X + 60) {
                 this._life += 1;
+                this.changeBackground("bonusLife");
                 return false;
             } else if (bonusLife.Y <= 0) {
                 return false;
@@ -235,8 +289,10 @@ class Game {
             return true;
         });
     }
-    lifeRender(time: number) {
+
+    lifeRender() {
         if (this._life === 0) {
+            this.stopGame();
             this._setGameState("end");
         }
         if (this._ctx !== null) {
@@ -246,11 +302,11 @@ class Game {
         }
     }
 
-    catRender(time: number) {
+    catRender() {
         this._cat.moveEvent();
         (this._ctx !== null) && this._ctx.drawImage(this._cat.getImg, this._cat.X, this._cat.Y, 60, 60);
     }
-    scoreRender(time: number) {
+    scoreRender() {
         if (this._ctx !== null) {
             this._ctx.fillText(`Villain Kill Score: ${this._gameScore}`, 10, 28);
             this._ctx.fillStyle = "white";
@@ -266,6 +322,8 @@ class Game {
                 if (fish.Y + 30 > villain.Y && fish.Y <= villain.Y && fish.X >= villain.X - 30 && fish.X <= villain.X + 30) {
                     this._gameScore++;
                     this._villainList.splice(i, 1);
+
+                    villain.attackSoundRun();
                     fish.fishAlive = false;
                 } else if (fish.Y <= 0) {
                     fish.fishAlive = false
@@ -273,6 +331,7 @@ class Game {
                 if (villain.Y >= this._height - 47) {
                     this._villainList.splice(i, 1);
                     this._life -= 1;
+                    this.changeBackground("damage");
                 }
                 i++;
             }
@@ -280,32 +339,33 @@ class Game {
     }
     setGame() {
         document.addEventListener("keydown", e => {
-            if (e.key === "ArrowLeft") {this._cat.moveToLeft = true;}
-            if (e.key === "ArrowRight") {this._cat.moveToRight = true;}
-            if (e.key === "ArrowUp") {this._cat.moveToTop = true; e.preventDefault();}
-            if (e.key === "ArrowDown") {this._cat.moveToBottom = true; e.preventDefault();}
+            if (e.key === "ArrowLeft") { this._cat.moveToLeft = true; }
+            if (e.key === "ArrowRight") { this._cat.moveToRight = true; }
+            if (e.key === "ArrowUp") { this._cat.moveToTop = true; e.preventDefault(); }
+            if (e.key === "ArrowDown") { this._cat.moveToBottom = true; e.preventDefault(); }
         });
         document.addEventListener("keyup", e => {
-            if (e.key === "ArrowLeft") {this._cat.moveToLeft = false;}
-            if (e.key === "ArrowRight") {this._cat.moveToRight = false;}
-            if (e.key === "ArrowUp") {this._cat.moveToTop = false; e.preventDefault();}
-            if (e.key === "ArrowDown") {this._cat.moveToBottom = false; e.preventDefault();}
+            if (e.key === "ArrowLeft") { this._cat.moveToLeft = false; }
+            if (e.key === "ArrowRight") { this._cat.moveToRight = false; }
+            if (e.key === "ArrowUp") { this._cat.moveToTop = false; e.preventDefault(); }
+            if (e.key === "ArrowDown") { this._cat.moveToBottom = false; e.preventDefault(); }
         });
-        this.setBackgroundImg = "normal";
+        this.backgroundImg = "normal";
     }
     stopGame() {
         this._start = false;
     }
     startGame() {
         const render = (time: number) => {
+            this._time = time;
             this.backgroundRender();
             this.attackCheck();
-            this.villainRender(time);
-            this.bonusLifeRender(time);
-            this.fishRender(time);
-            this.catRender(time);
-            this.lifeRender(time);
-            this.scoreRender(time);
+            this.villainRender();
+            this.bonusLifeRender();
+            this.fishRender();
+            this.catRender();
+            this.lifeRender();
+            this.scoreRender();
 
             this._start && requestAnimationFrame(render);
         }
@@ -321,55 +381,12 @@ const ShootingCat = ({ nowGame, user }: { [key: string]: any }) => {
     const [restartButtonSrc, setRestartButtonSrc] = useState(`${gameImageSrc}/game_restart_button_001.png`);
     const [mainButtonSrc, setMainButtonSrc] = useState(`${gameImageSrc}/game_main_button_001.png`);
 
-    const content = {
-        "menu":(
-            <div id="gameDisplay" className="startDisplay">
-                <div className="gameLogoBox">
-                    <img src={`${gameImageSrc}/game_logo.png`} alt="" />
-                </div>
-                <div className="buttonBox">
-                    <button onClick={() => setGameState("start")}
-                        onMouseOut={() => setStartButtonSrc(`${gameImageSrc}/game_start_button_001.png`)}
-                        onMouseOver={() => setStartButtonSrc(`${gameImageSrc}/game_start_button_002.png`)}
-                    >
-                        <img src={startButtonSrc} alt="" />
-                    </button>
-                    <button onClick={() => { }}
-                        onMouseOut={() => setOptionButtonSrc(`${gameImageSrc}/game_option_button_001.png`)}
-                        onMouseOver={() => setOptionButtonSrc(`${gameImageSrc}/game_option_button_002.png`)}
-                    >
-                        <img src={optionButtonSrc} alt="" />
-                    </button>
-                    <button onClick={() => { }}
-                        onMouseOut={() => setDeveloperButtonSrc(`${gameImageSrc}/game_developer_button_001.png`)}
-                        onMouseOver={() => setDeveloperButtonSrc(`${gameImageSrc}/game_developer_button_002.png`)}
-                    >
-                        <img src={developerButtonSrc} alt="" />
-                    </button>
-                </div>
-            </div>
-        ),
-        "start":<canvas id="gameDisplay" width="500" height="889" style={{ "background": "#000" }}/>,
-        "end":<div id="gameDisplay" className="endDisplay">
-                <div className="gameLogoBox">
-                    <img src={`${gameImageSrc}/game_logo.png`} alt="" />
-                </div>
-                <div className="buttonBox">
-                    <button onClick={() => {setGameState("start")}}
-                        onMouseOut={() => setRestartButtonSrc(`${gameImageSrc}/game_restart_button_001.png`)}
-                        onMouseOver={() => setRestartButtonSrc(`${gameImageSrc}/game_restart_button_002.png`)}
-                    >
-                        <img src={restartButtonSrc} alt="" />
-                    </button>
-                    <button onClick={() => {setGameState("menu")}}
-                        onMouseOut={() => setMainButtonSrc(`${gameImageSrc}/game_main_button_001.png`)}
-                        onMouseOver={() => setMainButtonSrc(`${gameImageSrc}/game_main_button_002.png`)}
-                    >
-                        <img src={mainButtonSrc} alt="" />
-                    </button>
-                </div>
-        </div>,
-    }[gameState];
+    useEffect(() => {
+        Sound.backgroundSoundPlay();
+        return () => {
+            Sound.backgroundSoundStop();
+        }
+    }, []);
 
     useEffect(() => {
         if (gameState === "menu") {
@@ -382,11 +399,76 @@ const ShootingCat = ({ nowGame, user }: { [key: string]: any }) => {
             gameObject.setGame();
             gameObject.startGame();
         }
-         if (gameState === "end") {
+        if (gameState === "end") {
             setRestartButtonSrc(`${gameImageSrc}/game_restart_button_001.png`)
             setMainButtonSrc(`${gameImageSrc}/game_main_button_001.png`)
-        }       
+        }
     }, [gameState]);
+
+    const content = {
+        "menu": (
+            <div id="gameDisplay" className="startDisplay">
+                <div className="gameLogoBox">
+                    <img src={`${gameImageSrc}/game_logo.png`} alt="" />
+                </div>
+                <div className="buttonBox">
+                    <button onClick={() => setGameState("start")}
+                        onMouseOut={() => setStartButtonSrc(`${gameImageSrc}/game_start_button_001.png`)}
+                        onMouseOver={() => {
+                            setStartButtonSrc(`${gameImageSrc}/game_start_button_002.png`);
+                            Sound.hoverEvent();
+                        }}
+                    >
+                        <img src={startButtonSrc} alt="" />
+                    </button>
+                    <button onClick={() => { }}
+                        onMouseOut={() => setOptionButtonSrc(`${gameImageSrc}/game_option_button_001.png`)}
+                        onMouseOver={() => {
+                            setOptionButtonSrc(`${gameImageSrc}/game_option_button_002.png`);
+                            Sound.hoverEvent();
+                        }}
+                    >
+                        <img src={optionButtonSrc} alt="" />
+                    </button>
+                    <button onClick={() => { }}
+                        onMouseOut={() => setDeveloperButtonSrc(`${gameImageSrc}/game_developer_button_001.png`)}
+                        onMouseOver={() => {
+                            setDeveloperButtonSrc(`${gameImageSrc}/game_developer_button_002.png`);
+                            Sound.hoverEvent();
+                        }}
+                    >
+                        <img src={developerButtonSrc} alt="" />
+                    </button>
+                </div>
+            </div>
+        ),
+        "start": <canvas id="gameDisplay" width="500" height="889" style={{ "background": "#000" }} />,
+        "end": <div id="gameDisplay" className="endDisplay">
+            <div className="gameLogoBox">
+                <img src={`${gameImageSrc}/game_logo.png`} alt="" />
+            </div>
+            <div className="buttonBox">
+                <button onClick={() => { setGameState("start") }}
+                    onMouseOut={() => setRestartButtonSrc(`${gameImageSrc}/game_restart_button_001.png`)}
+                    onMouseOver={() => {
+                        setRestartButtonSrc(`${gameImageSrc}/game_restart_button_002.png`);
+                        Sound.hoverEvent();
+                    }}
+                >
+                    <img src={restartButtonSrc} alt="" />
+                </button>
+                <button onClick={() => { setGameState("menu") }}
+                    onMouseOut={() => setMainButtonSrc(`${gameImageSrc}/game_main_button_001.png`)}
+                    onMouseOver={() => {
+                        setMainButtonSrc(`${gameImageSrc}/game_main_button_002.png`);
+                        Sound.hoverEvent();
+                    }}
+                >
+                    <img src={mainButtonSrc} alt="" />
+                </button>
+            </div>
+        </div>
+    }[gameState];
 
     return (
         <article className='ShootingCat'>
