@@ -2,8 +2,7 @@ import './scss/TopSection.scss';
 import CreateID from './CreateID';
 import LogIn from './LogIn';
 import {useState, useEffect} from 'react';
-import {Link, redirect} from 'react-router-dom';
-import { useCookies } from 'react-cookie';
+import {Link} from 'react-router-dom';
 
 interface state {
     user : string;
@@ -12,7 +11,7 @@ interface state {
 }
 
 const TopSection = ({inGame, user, loginCookie}: state) => {
-    const [cookies, setCookie, removeCookie, setUser] = loginCookie;
+    const [cookies, , removeCookie, setUser] = loginCookie;
     const [logInClass, setLogInClass] = useState("");
     const [createIDClass, setCreateIDClass] = useState("");
     const [userBoxClass, setFlag] = useState("");
@@ -45,6 +44,7 @@ const TopSection = ({inGame, user, loginCookie}: state) => {
                 </>
             );           
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user]);
 
     return (

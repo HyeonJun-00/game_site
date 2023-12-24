@@ -49,6 +49,45 @@
                 }
             }
         }
+        &.endDisplay {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            &>.gameLogoBox {
+                height: 49.38271604938272%;
+                aspect-ratio: 3/4;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                & > img {
+                    width: 100%;
+                    aspect-ratio: 3/2;
+                }
+            }
+            &>.buttonBox {
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                aspect-ratio: 1/1.2;
+                height: 44.44444444%;
+                
+                &>button {
+                    cursor: pointer;
+                    margin-top: 3rem;
+                    background-color: transparent;
+                    border: 0;
+                    width: 100%;
+                    aspect-ratio: 3/1;
+
+                    &>img {
+                        height: 100%;
+                        width: 100%;
+                        border-radius: 3rem;
+                    }
+                }
+            }  
+        }
     }
 
     &>.gameLeft,

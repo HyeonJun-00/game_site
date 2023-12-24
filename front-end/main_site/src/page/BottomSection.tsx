@@ -1,11 +1,7 @@
 import './scss/BottomSection.scss';
 
-interface state {
-    user?: string;
-    loginCookie?:any
-}
 
-const BottomSection = ({}: state) => {
+const BottomSection = () => {
     return (
         <section className='BottomSection'>
             <article>

@@ -3,7 +3,7 @@ import "./scss/ShootingCat.scss";
 
 const gameImageSrc = `${process.env.PUBLIC_URL}/images/shooting_cat`;
 
-class fishClass {
+class Fish {
     private _x: number;
     private _y: number;
     private _fishAlive: boolean;
@@ -36,7 +36,7 @@ class fishClass {
     }
 }
 
-class VillainClass {
+class Villain {
     private _x: number;
     private _y: number;
     private _villainImage: CanvasImageSource;
@@ -60,7 +60,8 @@ class VillainClass {
         this._y += 2;
     }
 }
-class BonusLifeClass {
+
+class BonusLife {
     private _bonusLifeImg: HTMLImageElement;
     private _x: number;
     private _y: number;
@@ -84,6 +85,7 @@ class BonusLifeClass {
         this._y += 2.4;
     }
 }
+
 class Cat {
     private _catImage: CanvasImageSource;
     private _x: number;
@@ -141,26 +143,25 @@ class Cat {
     set moveToRight(initBool:boolean) {
         this._moveKeyCheck.ArrowRight = initBool;
     }
-    
 }
 
-class GameClass {
+class Game {
     private _width: number;
     private _height: number;
     private _backgroundImage: HTMLImageElement;
     private _gameDisplay: HTMLElement | null;
     private _ctx: CanvasRenderingContext2D | null;
-    private _villainList: VillainClass[];
+    private _villainList: Villain[];
     private _createVillainTime: number;
     private _start: boolean;
     private _cat: Cat;
-    private _fishList: fishClass[];
+    private _fishList: Fish[];
     private _gameScore: number;
     private _createFishTime: number;
     private _life: number;
     private _lifeImg: HTMLImageElement;
     private _emptyLifeImg: HTMLImageElement;
-    private _bonusLifeList: BonusLifeClass[];
+    private _bonusLifeList: BonusLife[];
     private _createBonusLifeTime: number;
     private _setGameState: Dispatch<SetStateAction<string>>;
 
@@ -198,7 +199,7 @@ class GameClass {
     villainRender(time: number) {
         if (this._createVillainTime < time) {
             this._createVillainTime = time + 480;
-            this._villainList.push(new VillainClass());
+            this._villainList.push(new Villain());
         }
         this._villainList.forEach(villain => {
             (this._ctx !== null) && this._ctx.drawImage(villain.getImg, villain.X, villain.Y, 47, 47);
@@ -208,9 +209,9 @@ class GameClass {
     fishRender(time: number) {
         if (this._createFishTime < time) {
             this._createFishTime = time + 370;
-            this._fishList.push(new fishClass(this._cat.X, this._cat.Y));
+            this._fishList.push(new Fish(this._cat.X, this._cat.Y));
         }
-        this._fishList = this._fishList.filter((fish:fishClass) => {
+        this._fishList = this._fishList.filter((fish:Fish) => {
             (this._ctx !== null) && this._ctx.drawImage(fish.Img, fish.X, fish.Y, 47, 47);
             fish.moveFish();
             return fish.fishAlive;
@@ -220,9 +221,9 @@ class GameClass {
         if (this._life < 3 && this._createBonusLifeTime < time) {
             const randomTime = Math.floor(Math.random() * 5000) + 17000;
             this._createBonusLifeTime = time + randomTime + 10000;
-            setTimeout(() => this._bonusLifeList.push(new BonusLifeClass()), randomTime);
+            setTimeout(() => this._bonusLifeList.push(new BonusLife()), randomTime);
         }
-        this._bonusLifeList = this._bonusLifeList.filter((bonusLife: BonusLifeClass) => {
+        this._bonusLifeList = this._bonusLifeList.filter((bonusLife: BonusLife) => {
             bonusLife.moveBonusLife();
             (this._ctx !== null) && this._ctx.drawImage(bonusLife.Img, bonusLife.X, bonusLife.Y, 47, 47);
             if (bonusLife.Y + 60 > this._cat.Y && bonusLife.Y <= this._cat.Y && bonusLife.X >= this._cat.X && bonusLife.X <= this._cat.X + 60) {
@@ -235,15 +236,13 @@ class GameClass {
         });
     }
     lifeRender(time: number) {
-        if (this._life == 0) {
-            //this._setGameState("menu");
-            this._setGameState("menu");
-            //this.stopGame();
+        if (this._life === 0) {
+            this._setGameState("end");
         }
         if (this._ctx !== null) {
             this._ctx.drawImage(this._life >= 1 ? this._lifeImg : this._emptyLifeImg, 435, 7, 55, 55);
             this._ctx.drawImage(this._life >= 2 ? this._lifeImg : this._emptyLifeImg, 390, 7, 55, 55);
-            this._ctx.drawImage(this._life == 3 ? this._lifeImg : this._emptyLifeImg, 345, 7, 55, 55);
+            this._ctx.drawImage(this._life === 3 ? this._lifeImg : this._emptyLifeImg, 345, 7, 55, 55);
         }
     }
 
@@ -259,7 +258,7 @@ class GameClass {
         }
     }
     attackCheck() {
-        this._fishList.forEach((fish: fishClass) => {
+        this._fishList.forEach((fish: Fish) => {
             let i = 0;
             while (i < this._villainList.length) {
                 const villain = this._villainList[i];
@@ -319,6 +318,9 @@ const ShootingCat = ({ nowGame, user }: { [key: string]: any }) => {
     const [startButtonSrc, setStartButtonSrc] = useState(`${gameImageSrc}/game_start_button_001.png`);
     const [optionButtonSrc, setOptionButtonSrc] = useState(`${gameImageSrc}/game_option_button_001.png`);
     const [developerButtonSrc, setDeveloperButtonSrc] = useState(`${gameImageSrc}/game_developer_button_001.png`);
+    const [restartButtonSrc, setRestartButtonSrc] = useState(`${gameImageSrc}/game_restart_button_001.png`);
+    const [mainButtonSrc, setMainButtonSrc] = useState(`${gameImageSrc}/game_main_button_001.png`);
+
     const content = {
         "menu":(
             <div id="gameDisplay" className="startDisplay">
@@ -348,7 +350,25 @@ const ShootingCat = ({ nowGame, user }: { [key: string]: any }) => {
             </div>
         ),
         "start":<canvas id="gameDisplay" width="500" height="889" style={{ "background": "#000" }}/>,
-        "end":<div id="gameDisplay" className="endDisplay"></div>
+        "end":<div id="gameDisplay" className="endDisplay">
+                <div className="gameLogoBox">
+                    <img src={`${gameImageSrc}/game_logo.png`} alt="" />
+                </div>
+                <div className="buttonBox">
+                    <button onClick={() => {setGameState("start")}}
+                        onMouseOut={() => setRestartButtonSrc(`${gameImageSrc}/game_restart_button_001.png`)}
+                        onMouseOver={() => setRestartButtonSrc(`${gameImageSrc}/game_restart_button_002.png`)}
+                    >
+                        <img src={restartButtonSrc} alt="" />
+                    </button>
+                    <button onClick={() => {setGameState("menu")}}
+                        onMouseOut={() => setMainButtonSrc(`${gameImageSrc}/game_main_button_001.png`)}
+                        onMouseOver={() => setMainButtonSrc(`${gameImageSrc}/game_main_button_002.png`)}
+                    >
+                        <img src={mainButtonSrc} alt="" />
+                    </button>
+                </div>
+        </div>,
     }[gameState];
 
     useEffect(() => {
@@ -358,10 +378,14 @@ const ShootingCat = ({ nowGame, user }: { [key: string]: any }) => {
             setDeveloperButtonSrc(`${gameImageSrc}/game_developer_button_001.png`)
         }
         if (gameState === "start") {
-            let gameObject = new GameClass(setGameState);
+            let gameObject = new Game(setGameState);
             gameObject.setGame();
             gameObject.startGame();
         }
+         if (gameState === "end") {
+            setRestartButtonSrc(`${gameImageSrc}/game_restart_button_001.png`)
+            setMainButtonSrc(`${gameImageSrc}/game_main_button_001.png`)
+        }       
     }, [gameState]);
 
     return (
