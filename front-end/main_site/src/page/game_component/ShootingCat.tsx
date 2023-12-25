@@ -8,11 +8,11 @@ class Sound {
     static mainSound = 1;
     static attackSound = 1;
     static backgroundSound = new Audio(`${gameSoundSrc}/background.mp3`);
+    static hoverSound = new Audio(`${gameSoundSrc}/hover.mp3`);
     static hoverEvent = () => {
-        const hoverSound = new Audio(`${gameSoundSrc}/hover.mp3`);
-        hoverSound.volume = .2;
-        hoverSound.load();
-        hoverSound.play();
+        Sound.hoverSound.volume = .2;
+        Sound.hoverSound.autoplay = true;
+        Sound.hoverSound.load();
     };
     static backgroundSoundPlay() {
         Sound.backgroundSound.autoplay = true;
@@ -337,22 +337,26 @@ class Game {
             }
         });
     }
+    keydownEvent = (e: { key: string; preventDefault: () => void; }) => {
+        if (e.key === "ArrowLeft") { this._cat.moveToLeft = true; }
+        if (e.key === "ArrowRight") { this._cat.moveToRight = true; }
+        if (e.key === "ArrowUp") { this._cat.moveToTop = true; e.preventDefault(); }
+        if (e.key === "ArrowDown") { this._cat.moveToBottom = true; e.preventDefault(); }
+    }
+    keyupEvent = (e: { key: string; preventDefault: () => void; }) => {
+        if (e.key === "ArrowLeft") { this._cat.moveToLeft = false; }
+        if (e.key === "ArrowRight") { this._cat.moveToRight = false; }
+        if (e.key === "ArrowUp") { this._cat.moveToTop = false; e.preventDefault(); }
+        if (e.key === "ArrowDown") { this._cat.moveToBottom = false; e.preventDefault(); }
+    }
     setGame() {
-        document.addEventListener("keydown", e => {
-            if (e.key === "ArrowLeft") { this._cat.moveToLeft = true; }
-            if (e.key === "ArrowRight") { this._cat.moveToRight = true; }
-            if (e.key === "ArrowUp") { this._cat.moveToTop = true; e.preventDefault(); }
-            if (e.key === "ArrowDown") { this._cat.moveToBottom = true; e.preventDefault(); }
-        });
-        document.addEventListener("keyup", e => {
-            if (e.key === "ArrowLeft") { this._cat.moveToLeft = false; }
-            if (e.key === "ArrowRight") { this._cat.moveToRight = false; }
-            if (e.key === "ArrowUp") { this._cat.moveToTop = false; e.preventDefault(); }
-            if (e.key === "ArrowDown") { this._cat.moveToBottom = false; e.preventDefault(); }
-        });
+        document.addEventListener("keydown", this.keydownEvent);
+        document.addEventListener("keyup", this.keyupEvent);
         this.backgroundImg = "normal";
     }
     stopGame() {
+        document.removeEventListener("keydown", this.keydownEvent);
+        document.removeEventListener("keyup", this.keyupEvent);
         this._start = false;
     }
     startGame() {
@@ -366,7 +370,7 @@ class Game {
             this.catRender();
             this.lifeRender();
             this.scoreRender();
-
+            console.log(time);
             this._start && requestAnimationFrame(render);
         }
         requestAnimationFrame(render);
@@ -395,14 +399,19 @@ const ShootingCat = ({ nowGame, user }: { [key: string]: any }) => {
             setDeveloperButtonSrc(`${gameImageSrc}/game_developer_button_001.png`)
         }
         if (gameState === "start") {
-            let gameObject = new Game(setGameState);
+            let gameObject:Game | null = new Game(setGameState);
             gameObject.setGame();
             gameObject.startGame();
+            return () => {
+                gameObject?.stopGame();
+                gameObject = null;
+            }
         }
         if (gameState === "end") {
             setRestartButtonSrc(`${gameImageSrc}/game_restart_button_001.png`)
             setMainButtonSrc(`${gameImageSrc}/game_main_button_001.png`)
         }
+
     }, [gameState]);
 
     const content = {
