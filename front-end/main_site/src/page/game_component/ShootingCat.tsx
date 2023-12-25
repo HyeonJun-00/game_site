@@ -7,22 +7,23 @@ const gameSoundSrc = `${process.env.PUBLIC_URL}/sounds/shooting_cat`;
 class Sound {
     static mainSound = 1;
     static attackSound = 1;
-    static backgroundSound = new Audio(`${gameSoundSrc}/background.mp3`);
+    static backgroundSound = new Audio();
     static hoverSound = new Audio(`${gameSoundSrc}/hover.mp3`);
-    static hoverEvent = () => {
+    static hoverEvent() {
         Sound.hoverSound.volume = .2;
         Sound.hoverSound.autoplay = true;
         Sound.hoverSound.load();
     };
     static backgroundSoundPlay() {
-        Sound.backgroundSound.autoplay = true;
+        Sound.backgroundSound.src = `${gameSoundSrc}/background.mp3`;
         Sound.backgroundSound.loop = true;
         Sound.backgroundSound.volume = 0.2;
-        Sound.backgroundSound.load();
+        Sound.backgroundSound.play();
     }
     static backgroundSoundStop() {
         Sound.backgroundSound.pause();
         Sound.backgroundSound.currentTime = 0;
+        Sound.backgroundSound.src = "";
     }
 }
 
@@ -31,13 +32,19 @@ class Fish {
     private _y: number;
     private _fishAlive: boolean;
     private _fishImage: CanvasImageSource;
+    private _fishAudio: HTMLAudioElement;
 
     constructor(startX: number, startY: number) {
         this._x = startX;
         this._y = startY;
         this._fishAlive = true;
+
         this._fishImage = new Image();
+        this._fishAudio = new Audio(`${gameSoundSrc}/shot.mp3`);
+
         this._fishImage.src = `${gameImageSrc}/fish1_1.png`;
+        this._fishAudio.volume = .1;
+        this._fishAudio.play();
     }
     get X() {
         return this._x;
@@ -96,12 +103,16 @@ class BonusLife {
     private _bonusLifeImg: HTMLImageElement;
     private _x: number;
     private _y: number;
+    private _bonusLifeSound: HTMLAudioElement;
 
     constructor() {
         this._x = Math.floor(Math.random() * 461);
         this._y = 0;
         this._bonusLifeImg = new Image();
+        this._bonusLifeSound = new Audio(`${gameSoundSrc}/bonusLife.mp3`);
+
         this._bonusLifeImg.src = `${gameImageSrc}/bonus_life.png`;
+        this._bonusLifeSound.volume = .3;
     }
     get X() {
         return this._x;
@@ -111,6 +122,9 @@ class BonusLife {
     }
     get Img() {
         return this._bonusLifeImg;
+    }
+    soundPlay() {
+        this._bonusLifeSound.play();
     }
     moveBonusLife() {
         this._y += 2.4;
@@ -280,6 +294,7 @@ class Game {
             bonusLife.moveBonusLife();
             (this._ctx !== null) && this._ctx.drawImage(bonusLife.Img, bonusLife.X, bonusLife.Y, 47, 47);
             if (bonusLife.Y + 60 > this._cat.Y && bonusLife.Y <= this._cat.Y && bonusLife.X > this._cat.X - 60 && bonusLife.X < this._cat.X + 60) {
+                bonusLife.soundPlay();
                 this._life += 1;
                 this.changeBackground("bonusLife");
                 return false;
@@ -308,7 +323,7 @@ class Game {
     }
     scoreRender() {
         if (this._ctx !== null) {
-            this._ctx.fillText(`Villain Kill Score: ${this._gameScore}`, 10, 28);
+            this._ctx.fillText(`Villain Kill Score: ${this._gameScore}`, 10, 40);
             this._ctx.fillStyle = "white";
             this._ctx.font = "25px Arial";
         }
@@ -332,22 +347,26 @@ class Game {
                     this._villainList.splice(i, 1);
                     this._life -= 1;
                     this.changeBackground("damage");
+                    let damageSound = new Audio(`${gameSoundSrc}/damage.mp3`);
+
+                    damageSound.volume = .2;
+                    damageSound.play();
                 }
                 i++;
             }
         });
     }
     keydownEvent = (e: { key: string; preventDefault: () => void; }) => {
-        if (e.key === "ArrowLeft") { this._cat.moveToLeft = true; }
-        if (e.key === "ArrowRight") { this._cat.moveToRight = true; }
-        if (e.key === "ArrowUp") { this._cat.moveToTop = true; e.preventDefault(); }
-        if (e.key === "ArrowDown") { this._cat.moveToBottom = true; e.preventDefault(); }
+        if (e.key === "ArrowLeft" || e.key === "Left") { this._cat.moveToLeft = true; }
+        if (e.key === "ArrowRight" || e.key === "Right") { this._cat.moveToRight = true; }
+        if (e.key === "ArrowUp" || e.key === "Up") { this._cat.moveToTop = true; e.preventDefault(); }
+        if (e.key === "ArrowDown" || e.key === "Down") { this._cat.moveToBottom = true; e.preventDefault(); }
     }
     keyupEvent = (e: { key: string; preventDefault: () => void; }) => {
-        if (e.key === "ArrowLeft") { this._cat.moveToLeft = false; }
-        if (e.key === "ArrowRight") { this._cat.moveToRight = false; }
-        if (e.key === "ArrowUp") { this._cat.moveToTop = false; e.preventDefault(); }
-        if (e.key === "ArrowDown") { this._cat.moveToBottom = false; e.preventDefault(); }
+        if (e.key === "ArrowLeft" || e.key === "Left") { this._cat.moveToLeft = false; }
+        if (e.key === "ArrowRight" || e.key === "Right") { this._cat.moveToRight = false; }
+        if (e.key === "ArrowUp" || e.key === "Up") { this._cat.moveToTop = false; e.preventDefault(); }
+        if (e.key === "ArrowDown" || e.key === "Down") { this._cat.moveToBottom = false; e.preventDefault(); }
     }
     setGame() {
         document.addEventListener("keydown", this.keydownEvent);
@@ -451,7 +470,7 @@ const ShootingCat = ({ nowGame, user }: { [key: string]: any }) => {
                 </div>
             </div>
         ),
-        "start": <canvas id="gameDisplay" width="500" height="889" style={{ "background": "#000" }} />,
+        "start": <canvas id="gameDisplay" width="500" height="889" style={{ "background": "#4DBBDC" }} />,
         "end": <div id="gameDisplay" className="endDisplay">
             <div className="gameLogoBox">
                 <img src={`${gameImageSrc}/game_logo.png`} alt="" />
