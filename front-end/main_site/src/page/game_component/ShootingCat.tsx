@@ -293,7 +293,7 @@ class Game {
         this._bonusLifeList = this._bonusLifeList.filter((bonusLife: BonusLife) => {
             bonusLife.moveBonusLife();
             (this._ctx !== null) && this._ctx.drawImage(bonusLife.Img, bonusLife.X, bonusLife.Y, 47, 47);
-            if (bonusLife.Y + 60 > this._cat.Y && bonusLife.Y <= this._cat.Y && bonusLife.X > this._cat.X - 60 && bonusLife.X < this._cat.X + 60) {
+            if (bonusLife.Y + 60 > this._cat.Y && bonusLife.Y - 30 <= this._cat.Y && bonusLife.X > this._cat.X - 60 && bonusLife.X < this._cat.X + 60) {
                 bonusLife.soundPlay();
                 this._life += 1;
                 this.changeBackground("bonusLife");
