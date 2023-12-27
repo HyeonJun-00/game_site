@@ -42,7 +42,7 @@ const App = () => {
   useEffect(() => {
     (async () => {
       try {
-        const response = await axios.get('http://kkms4001.iptime.org:10096/game/');
+        const response = await axios.get('http://35.216.113.72:10096/game');
         const tempObject: { [key: string]: any | undefined } = { "전체 게임": [] };
         const resData = response.data.filter((v: { [key: string]: any; }) => v.view);
         

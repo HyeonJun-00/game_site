@@ -34,7 +34,7 @@ const TopSection = ({inGame, user, loginCookie}: state) => {
                         setFlag("");
                     }}>마이페이지</li>
                     <li key={Math.random()} onClick={() => {
-                        window.location.href = "http://kkms4001.iptime.org/~c18st09/project/game_site/front-end/admin_site/html/admin.html";
+                        window.location.href = "http://35.216.113.72/admin_site/html/admin.html";
                     }}>관리자 페이지</li>
                     <li key={Math.random()} onClick={() => {
                         removeCookie("id");

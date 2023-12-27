@@ -2,6 +2,7 @@ from django.shortcuts import render, HttpResponse
 from game_app.models import UserModel, GameModel
 import json
 from django.views import View
+import datetime
 
 class User(View):
     def get(self, req):
@@ -90,6 +91,5 @@ def nickname_duplicate_check(req):
         return HttpResponse("false")
     else:
         return HttpResponse("true")
-
 
 # Create your views here.

@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-jh)tm)d38vt24*okh4ep+4ck6vynw12-5osvzh4b)3_s4wbe_#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1',"kkms4001.iptime.org"]
+ALLOWED_HOSTS = ['localhost', '127.0.0.1',"35.216.113.72"]
 
 
 # Application definition
@@ -77,15 +77,42 @@ WSGI_APPLICATION = 'game_site.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': "c18st10",
+#         'USER': "c18st10",
+#         'PASSWORD' : "6f60860nnayoeFzU",
+#         'HOST' : "kkms4001.iptime.org",
+#         'PORT': 0,
+#         'OPTIONS': {'charset': 'utf8mb4'},
+#     }
+# }
+import os
+import environ
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': "c18st10",
-        'USER': "c18st10",
-        'PASSWORD' : "6f60860nnayoeFzU",
-        'OPTIONS': {'charset': 'utf8mb4'},
-    }
+  'default': {
+    'ENGINE': 'django.db.backends.mysql',
+    'NAME': "webchatting",
+    'HOST': "gcp.connect.psdb.cloud",
+    'PORT': "3306",
+    'USER': "cg7nbcynmzfer4sk91k6",
+    'PASSWORD': "pscale_pw_UxG0DCqZnfrsFc9U53qi6qOWfapzmBamiH0Bqkcuqrf",
+    'OPTIONS': {'ssl': {'ca': "/etc/ssl/certs/ca-certificates.crt"}, 'charset': 'utf8mb4'}
+  }
 }
+# DATABASES = {
+#   'default': {
+#     'ENGINE': 'django.db.backends.mysql',
+#     'NAME': os.environ.get('DB_NAME'),
+#     'HOST': os.environ.get('DB_HOST'),
+#     'PORT': os.environ.get('DB_PORT'),
+#     'USER': os.environ.get('DB_USER'),
+#     'PASSWORD': os.environ.get('DB_PASSWORD'),
+#     'OPTIONS': {'ssl': {'ca': os.environ.get('MYSQL_ATTR_SSL_CA')}, 'charset': 'utf8mb4'}
+#   }
+# }
 
 
 # Password validation
