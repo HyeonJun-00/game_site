@@ -4,7 +4,7 @@
     position: fixed;
     justify-content: center;
     background-color: #FAFAFA;
-    border-bottom: 1px solid #AAA;
+    border-bottom: 1px solid #EAEAEA;
     width: 100%;
     height: 9.1rem;
     &.inGame {
@@ -30,19 +30,19 @@
         & #logo {
             cursor: pointer;
             margin-left: 1rem;
+            height: 4.5rem;
         }
     }
     & > .topCenterBox {
-        width: 40%;
+        width: 50rem;
         justify-content: center;
         & > .searchBox {
             border-radius: 5rem;
             padding: 1rem 2rem 1rem 2rem;
-            height: 3rem;
-            max-width: 50rem;
-            width: 100%;
+            height: 2.5rem;
+            width: 50rem;
             display: flex;
-            border: 2px solid #2000E2;
+            border: 2px solid #DDDDDD;
             &>input {
                 background-color: transparent;
                 font-size: 1.6rem;
@@ -65,9 +65,37 @@
             font-size: 1.6rem;
         }
         & > img {
-            width: 5rem;
-            height: 5rem;
+            width: 3rem;
+            height: 3rem;
             cursor: pointer;
+        }
+        & > div {
+            display: flex;
+            width: 14rem;
+            justify-content: center;
+            & > button {
+                cursor: pointer;
+                width: 8.2rem;
+                height: 3rem;
+                color: #2000E2;
+                background-color: transparent;
+                font-size: 1.5rem;
+                border: 1px solid #2000E2;
+                border-radius: 5rem;
+            }
+            &#menuBox {
+                cursor: pointer;
+                display: inline;
+                width: auto;
+            }
+            & > div {
+                display: flex;
+                align-items: center;
+                & > p {
+                    padding-left: .5rem;
+                    font-size: 1.5rem;
+                }
+            }
         }
         & > #userBox {
             display: none;

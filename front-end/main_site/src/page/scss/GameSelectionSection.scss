@@ -6,15 +6,87 @@
     min-height: 100%;
     width: 120rem;
     padding-bottom: 5rem;
-    position: relative;
-    left: 50%;
+    margin-left: 50%;
     transform: translate(-50%, 0);
 
     & > article {
         display: inline-block;
         width: calc(100% - 10rem);
-        padding: 0 5rem 2rem 5rem;
+        padding: 0 0rem 2rem 0rem;
         min-height: 30rem;
+        &.newGames {
+            overflow: hidden;
+            display: flex;
+            width: 100vw;
+            height: 64.6rem;
+            margin: 0;
+            margin-left: calc((100vw - 120rem) / -2);
+            align-items: center;
+            justify-content: center;
+
+            & > .gameList {
+                position: relative;
+                display: flex;
+                width: auto;
+                height: 52rem;
+                //left: calc(-1267.2px*3);
+                & > div {
+                    height: 100%;
+                    width: auto;
+                    display: flex;
+                    &>div {
+                        margin: 0 8rem 0 8rem;
+                        border-radius: 2rem;
+                        width: 120rem;
+                        height: 100%;
+                    }
+                }
+            }
+        }
+        &.popularGames {
+            width: 100%;
+            & > .gameList {
+                display: flex;
+                width: 100%;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                &>.gameBox {
+                    cursor: pointer;
+                    margin-bottom: 3rem;
+                    background-color: #D9D9D9;
+                    width: 38rem;
+                    height: 38rem;
+                    border-radius: 2rem;
+                }
+            }
+        }
+        &.allGames {
+            width: 100%;
+            & > .gameTagBox {
+                width: 100%;
+                display: flex;
+                flex-wrap: wrap;
+                & > p {
+                    cursor: pointer;
+                    margin-left: 1.5rem;
+                    display: inline-block;
+                    border: 1px solid #CCCCCC;
+                    font-weight: 100;
+                    color: #666666;
+                    border-radius: 10rem;
+                    font-size: 2rem;
+                    padding: .55rem 3.7rem .55rem 3.7rem;
+                    &:first-child {
+                        margin: 0;
+                    }
+                    &.selecttionFlag {
+                        background-color: #2C17A9;
+                        border-color: #2C17A9;
+                        color: #fff;
+                    }
+                }
+            }
+        }
         & > .gameTag {
             display: inline-block;
             font-weight: 600;

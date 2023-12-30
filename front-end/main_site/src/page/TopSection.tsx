@@ -17,15 +17,19 @@ const TopSection = ({inGame, user, loginCookie}: state) => {
     const [userBoxClass, setFlag] = useState("");
     const [userBox, setUserBox] = useState(<></>);
     const [profileImg, setProfileImg] = useState("guest_profile");
+    const [content, setContent] = useState(<></>);
+
     const profileClickEvnet = () => {
         if (cookies.id === undefined) {setLogInClass("displayFlag");} 
         else if (userBoxClass === "") { setFlag("displayFlag"); }
         else { setFlag(""); }
     };
+
     useEffect(() => {
         if (cookies.id === undefined) {
             setProfileImg("guest_profile");
             setUserBox(<></>);
+            setContent(<button onClick={() => setCreateIDClass("displayFlag")}>Join</button>);
         } else {
             setProfileImg("user_profile");
             setUserBox(
@@ -39,10 +43,16 @@ const TopSection = ({inGame, user, loginCookie}: state) => {
                     <li key={Math.random()} onClick={() => {
                         removeCookie("id");
                         setFlag("");
-                        setUser(`손님${new Date().getTime() % 1000000}`);
+                        setUser(`user${(Math.floor((Math.random() * 90000) + 10000))}`);
                     }}>로그아웃</li>
                 </>
             );           
+            setContent(
+                <div>
+                    <img src={`${process.env.PUBLIC_URL}/images/coin.png`} alt="coin" />
+                    <p>1,581</p>
+                </div>
+            );
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user]);
@@ -57,19 +67,23 @@ const TopSection = ({inGame, user, loginCookie}: state) => {
                 </div>
                 <div className='topCenterBox'>
                     <div className='searchBox'>
-                        <input placeholder='원하는 게임을 검색해 보세요!'></input>
+                        <input ></input>
                         <img id='searchButton' src={`${process.env.PUBLIC_URL}/images/search_button.png`} alt='search_button'></img>
                     </div>
                 </div>
                 <div className='topRightBox'>
-                    <p onClick={() => profileClickEvnet()}>{user+"님"}</p>
                     <img id='profile' src={`${process.env.PUBLIC_URL}/images/${profileImg}.png`} alt='profile' onClick={() => profileClickEvnet()}></img>
+                    <p onClick={() => profileClickEvnet()}>{user}</p>
+                    <div>{content}</div>
+                    <div id='menuBox'>
+                        <img src={`${process.env.PUBLIC_URL}/images/menu.png`} alt='menu'></img>
+                    </div>
                     <ul id='userBox' className={userBoxClass}>
                         {userBox}
                     </ul>
                 </div>
             </article>
-            <LogIn loginCookie={loginCookie} logIn={[logInClass, setLogInClass]} setCreateIDClass={setCreateIDClass}></LogIn>
+            <LogIn loginCookie={loginCookie} logIn={[logInClass, setLogInClass]}></LogIn>
             <CreateID displayFalg={[createIDClass, setCreateIDClass]}></CreateID>
         </section>
     );

@@ -1,7 +1,6 @@
 import './scss/LogIn.scss';
 import axios from 'axios';
 import { useState } from 'react';
-import { useCookies } from 'react-cookie';
 
 interface state {
     children? : any;
@@ -11,14 +10,12 @@ interface state {
     loginCookie:any
 }
 
-const LogIn = ({logIn, setCreateIDClass, loginCookie}:state) => {
-    const [cookies, setCookie, removeCookie, setUser] = loginCookie;
+const LogIn = ({logIn, loginCookie}:state) => {
+    const [, setCookie, , setUser] = loginCookie;
     const [logInClass, setLogInClass] = logIn;
     const [userID, setUserID] = useState("");
     const [userPW, setUserPW] = useState("");
-    const displayFalgEvent = () => {
-        setCreateIDClass("displayFlag");
-    }
+
     const userLogIn = async () => {
         try {
             const response = await axios.post('http://35.216.113.72:10096/user_login/', {
@@ -52,7 +49,7 @@ const LogIn = ({logIn, setCreateIDClass, loginCookie}:state) => {
                     <input type="text" placeholder='USER ID' value={userID} onChange={(e) => setUserID(e.target.value)}/>
                     <input type="password" placeholder='PASSWORD' value={userPW} onChange={(e) => setUserPW(e.target.value)}/>
                     <button onClick={userLogIn}>Login</button>
-                    <div onClick={() => displayFalgEvent()}>회원가입</div>
+                    <div></div>
                 </div>
             </div>
         </div>
