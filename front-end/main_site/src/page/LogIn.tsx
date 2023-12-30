@@ -21,7 +21,7 @@ const LogIn = ({logIn, setCreateIDClass, loginCookie}:state) => {
     }
     const userLogIn = async () => {
         try {
-            const response = await axios.post('http://kkms4001.iptime.org:10096/user_login/', {
+            const response = await axios.post('http://35.216.113.72:10096/user_login/', {
                     nickname:userID,
                     password:userPW
             });

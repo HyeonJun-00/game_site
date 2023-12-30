@@ -71,7 +71,7 @@ const CreateID = ({displayFalg}:state) => {
     };
     const IdDuplicateCheck = async () => {
         try {
-            const response = await axios.get('http://kkms4001.iptime.org:10096/nickname_duplicate_check/', {
+            const response = await axios.get('http://35.216.113.72:10096/nickname_duplicate_check/', {
                 params: {
                     nickname:userID,
                 }
@@ -94,7 +94,7 @@ const CreateID = ({displayFalg}:state) => {
     const signInFunction = () => {
         const signUpSuccessful = async () => {
             try {
-                const response = await axios.post('http://kkms4001.iptime.org:10096/user/', 
+                const response = await axios.post('http://35.216.113.72:10096/user/', 
                     new URLSearchParams({
                         nickname: userID,
                         password: userPW,

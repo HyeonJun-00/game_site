@@ -90,29 +90,33 @@ WSGI_APPLICATION = 'game_site.wsgi.application'
 # }
 import os
 import environ
+env = environ.Env(DEBUG=(bool, True))
+environ.Env.read_env(
+    env_file=os.path.join(BASE_DIR, '.env')
+)
 
-DATABASES = {
-  'default': {
-    'ENGINE': 'django.db.backends.mysql',
-    'NAME': "webchatting",
-    'HOST': "gcp.connect.psdb.cloud",
-    'PORT': "3306",
-    'USER': "cg7nbcynmzfer4sk91k6",
-    'PASSWORD': "pscale_pw_UxG0DCqZnfrsFc9U53qi6qOWfapzmBamiH0Bqkcuqrf",
-    'OPTIONS': {'ssl': {'ca': "/etc/ssl/certs/ca-certificates.crt"}, 'charset': 'utf8mb4'}
-  }
-}
 # DATABASES = {
 #   'default': {
 #     'ENGINE': 'django.db.backends.mysql',
-#     'NAME': os.environ.get('DB_NAME'),
-#     'HOST': os.environ.get('DB_HOST'),
-#     'PORT': os.environ.get('DB_PORT'),
-#     'USER': os.environ.get('DB_USER'),
-#     'PASSWORD': os.environ.get('DB_PASSWORD'),
-#     'OPTIONS': {'ssl': {'ca': os.environ.get('MYSQL_ATTR_SSL_CA')}, 'charset': 'utf8mb4'}
+#     'NAME': "webchatting",
+#     'HOST': "gcp.connect.psdb.cloud",
+#     'PORT': "3306",
+#     'USER': "cg7nbcynmzfer4sk91k6",
+#     'PASSWORD': "pscale_pw_UxG0DCqZnfrsFc9U53qi6qOWfapzmBamiH0Bqkcuqrf",
+#     'OPTIONS': {'ssl': {'ca': "/etc/ssl/certs/ca-certificates.crt"}, 'charset': 'utf8mb4'}
 #   }
 # }
+DATABASES = {
+  'default': {
+    'ENGINE': 'django.db.backends.mysql',
+    'NAME': env('DB_NAME'),
+    'HOST': env('DB_HOST'),
+    'PORT': env('DB_PORT'),
+    'USER': env('DB_USER'),
+    'PASSWORD': env('DB_PASSWORD'),
+    'OPTIONS': {'ssl': {'ca': env('MYSQL_ATTR_SSL_CA')}, 'charset': 'utf8mb4'}
+  }
+}
 
 
 # Password validation
