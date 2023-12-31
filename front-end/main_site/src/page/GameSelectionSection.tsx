@@ -24,15 +24,82 @@ const GameSelectionSection = ({setGame, gameObject}:{[key:string]: any, gameObje
     const [newGameList, setNewGameList] = useState<any>([]);
     const articleList:any = [];
     const [seeMore, setSeeMore] = useState<see>({});
+    const [slideIndex, setSlideIndex] = useState(0);
+    const [autoSlideStop, setAutoSlideStop] = useState(false);
+
+    const nextSlideEvent = () => {
+        if (slideIndex > -1) {
+            setSlideIndex(slideIndex - 1);
+        } else {
+            const testBox: any | null = document.getElementsByClassName("test");
+
+            if (testBox !== null && testBox.length > 2) {
+                for (let i = 0; i < 3; i++) {
+                    testBox[i].classList.add("z");
+                    testBox[i].style.transform = `translate(${2 * 128}rem)`;
+                } 
+                setTimeout(() => {
+                    setSlideIndex(1);
+                }, 1);
+            }
+        }
+    };
+    const prevSlideEvent = () => {
+        if (slideIndex < 1) {
+            setSlideIndex(slideIndex + 1);
+        } else {
+            const testBox: any | null = document.getElementsByClassName("test");
+
+            if (testBox !== null && testBox.length > 2) {
+                for (let i = 0; i < 3; i++) {
+                    testBox[i].classList.add("z");
+                    testBox[i].style.transform = `translate(${-2 * 128}rem)`;
+                    console.log(testBox[i]);
+                } 
+                setTimeout(() => {
+                    setSlideIndex(-1);
+                }, 1);
+            }
+        }
+    };
+    const [time, setTime] = useState<any>();
+
+    useEffect(() => {
+        setTime(setTimeout(nextSlideEvent, 3000));
+    }, [slideIndex, autoSlideStop]);
+
+    useEffect(() => {
+        if (autoSlideStop) {
+            clearInterval(time);
+        }
+    }, [time, autoSlideStop]);
+
+    useEffect(() => {
+        const testBox:any|null = document.getElementsByClassName("test");
+
+        if (testBox !== null && testBox.length > 2) {
+            for (let i = 0; i < 3; i++) {
+                testBox[i].classList.remove("z");
+                testBox[i].style.transform = `translate(${slideIndex * 128}rem)`;
+            }
+        }
+
+    }, [slideIndex]);
 
     useEffect(() => {
         let tempList:any = [];
-
-        test.forEach((v) => {
+        for (let i = 0; i < 3; i++) {
             tempList.push(
-                <div key={Math.random()} style={{backgroundColor:v.color}}></div>
-            )    
-        });
+                <div key={Math.random()} className='test'>
+                    {
+                        test.map((v) => <div 
+                            onMouseOver={() => setAutoSlideStop(true)} onMouseOut={() => setAutoSlideStop(false)}
+                            key={Math.random()} style={{ backgroundColor: v.color }}>
+                        </div>)
+                    }
+                </div>
+            );
+        }
         setNewGameList(tempList);
     }, []);
 
@@ -76,6 +143,10 @@ const GameSelectionSection = ({setGame, gameObject}:{[key:string]: any, gameObje
     return (
         <section className='GameSelectionSection'>
             <article className='newGames'>
+                <div className='buttonBox'>
+                    <button onClick={prevSlideEvent} onMouseOver={() => setAutoSlideStop(true)} onMouseOut={() => setAutoSlideStop(false)}>{"<"}</button>
+                    <button onClick={nextSlideEvent} onMouseOver={() => setAutoSlideStop(true)} onMouseOut={() => setAutoSlideStop(false)}>{">"}</button>
+                </div>
                 <div className='gameList'>
                     <div>
                         {newGameList}

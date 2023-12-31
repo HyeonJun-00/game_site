@@ -28,9 +28,8 @@
             cursor: pointer;
         }
         & #logo {
+            margin-top: .3rem;
             cursor: pointer;
-            margin-left: 1rem;
-            height: 4.5rem;
         }
     }
     & > .topCenterBox {
@@ -72,7 +71,6 @@
         & > div {
             display: flex;
             width: 14rem;
-            justify-content: center;
             & > button {
                 cursor: pointer;
                 width: 8.2rem;
@@ -84,13 +82,14 @@
                 border-radius: 5rem;
             }
             &#menuBox {
+                margin-top: .3rem;
                 cursor: pointer;
                 display: inline;
                 width: auto;
             }
             & > div {
                 display: flex;
-                align-items: center;
+                margin-left: 1.5rem;
                 & > p {
                     padding-left: .5rem;
                     font-size: 1.5rem;
