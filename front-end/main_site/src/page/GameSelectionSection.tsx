@@ -15,28 +15,28 @@ interface see {
     [key: string]: string;
 }
 const GameSelectionSection = ({setGame, gameObject}:{[key:string]: any, gameObject : tag}) => {
-    const [test] = useState([
+    const [testJson] = useState([
         {color:"#8F63C8"},
         {color:"#4DBBDC"},
         {color:"#C8A063"},
-
     ]);
     const [newGameList, setNewGameList] = useState<any>([]);
     const articleList:any = [];
     const [seeMore, setSeeMore] = useState<see>({});
     const [slideIndex, setSlideIndex] = useState(0);
     const [autoSlideStop, setAutoSlideStop] = useState(false);
+    const [time, setTime] = useState<any>();
 
     const nextSlideEvent = () => {
         if (slideIndex > -1) {
             setSlideIndex(slideIndex - 1);
         } else {
-            const testBox: any | null = document.getElementsByClassName("test");
+            const slideBox: any | null = document.getElementsByClassName("slideBox");
 
-            if (testBox !== null && testBox.length > 2) {
+            if (slideBox !== null && slideBox.length > 2) {
                 for (let i = 0; i < 3; i++) {
-                    testBox[i].classList.add("z");
-                    testBox[i].style.transform = `translate(${2 * 128}rem)`;
+                    slideBox[i].classList.add("z");
+                    slideBox[i].style.transform = `translate(${2 * 128}rem)`;
                 } 
                 setTimeout(() => {
                     setSlideIndex(1);
@@ -44,17 +44,17 @@ const GameSelectionSection = ({setGame, gameObject}:{[key:string]: any, gameObje
             }
         }
     };
+
     const prevSlideEvent = () => {
         if (slideIndex < 1) {
             setSlideIndex(slideIndex + 1);
         } else {
-            const testBox: any | null = document.getElementsByClassName("test");
+            const slideBox: any | null = document.getElementsByClassName("slideBox");
 
-            if (testBox !== null && testBox.length > 2) {
+            if (slideBox !== null && slideBox.length > 2) {
                 for (let i = 0; i < 3; i++) {
-                    testBox[i].classList.add("z");
-                    testBox[i].style.transform = `translate(${-2 * 128}rem)`;
-                    console.log(testBox[i]);
+                    slideBox[i].classList.add("z");
+                    slideBox[i].style.transform = `translate(${-2 * 128}rem)`;
                 } 
                 setTimeout(() => {
                     setSlideIndex(-1);
@@ -62,7 +62,6 @@ const GameSelectionSection = ({setGame, gameObject}:{[key:string]: any, gameObje
             }
         }
     };
-    const [time, setTime] = useState<any>();
 
     useEffect(() => {
         setTime(setTimeout(nextSlideEvent, 3000));
@@ -75,24 +74,25 @@ const GameSelectionSection = ({setGame, gameObject}:{[key:string]: any, gameObje
     }, [time, autoSlideStop]);
 
     useEffect(() => {
-        const testBox:any|null = document.getElementsByClassName("test");
+        const slideBox:any|null = document.getElementsByClassName("slideBox");
 
-        if (testBox !== null && testBox.length > 2) {
+        if (slideBox !== null && slideBox.length > 2) {
             for (let i = 0; i < 3; i++) {
-                testBox[i].classList.remove("z");
-                testBox[i].style.transform = `translate(${slideIndex * 128}rem)`;
+                slideBox[i].classList.remove("z");
+                slideBox[i].style.transform = `translate(${slideIndex * 128}rem)`;
             }
         }
 
     }, [slideIndex]);
 
     useEffect(() => {
-        let tempList:any = [];
+        const tempList:any = [];
+
         for (let i = 0; i < 3; i++) {
             tempList.push(
-                <div key={Math.random()} className='test'>
+                <div key={Math.random()} className='slideBox'>
                     {
-                        test.map((v) => <div 
+                        testJson.map((v) => <div 
                             onMouseOver={() => setAutoSlideStop(true)} onMouseOut={() => setAutoSlideStop(false)}
                             key={Math.random()} style={{ backgroundColor: v.color }}>
                         </div>)
