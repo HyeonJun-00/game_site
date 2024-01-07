@@ -179,7 +179,7 @@ const GameSelectionSection = ({setGame, gameObject}:{[key:string]: any, gameObje
                     <div className='gameBox'></div>
                 </div>
             </article>
-            {/*articleList*/}
+            {articleList}
         </section>
     );
 };
