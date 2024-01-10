@@ -5,6 +5,7 @@ class UserModel(models.Model):
     user_password = models.CharField(help_text="User password", max_length=30, blank=False, null=False)
     user_email = models.EmailField(help_text="User E-mail", unique=True, blank=False, null=False)
     user_rermissions = models.CharField(help_text="User rermissions", max_length=11, blank=False, null=False, default="normal")
+    user_gold = models.BigIntegerField(help_text="User gold", default=1000)
     created_date = models.DateTimeField(help_text="Created Date time", auto_now_add=True)
 
 class GameModel(models.Model):

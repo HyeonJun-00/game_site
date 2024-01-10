@@ -1,11 +1,12 @@
 import './scss/TopSection.scss';
 import CreateID from './CreateID';
 import LogIn from './LogIn';
+import axios from 'axios';
 import {useState, useEffect} from 'react';
 import {Link} from 'react-router-dom';
 
 interface state {
-    user : string;
+    user : any;
     loginCookie:any;
     inGame:string;
 }
@@ -31,6 +32,15 @@ const TopSection = ({inGame, user, loginCookie}: state) => {
             setUserBox(<></>);
             setContent(<button onClick={() => setCreateIDClass("displayFlag")}>Join</button>);
         } else {
+            (async () => {
+                const response = await axios.get('http://35.216.113.72:10096/user_gold/', {
+                    params: {
+                        name: cookies.id,
+                    }
+                }
+                );
+                setUser({...user, gold:response.data});
+            })();
             setProfileImg("user_profile");
             setUserBox(
                 <>
@@ -43,19 +53,24 @@ const TopSection = ({inGame, user, loginCookie}: state) => {
                     <li key={Math.random()} onClick={() => {
                         removeCookie("id");
                         setFlag("");
-                        setUser(`user${(Math.floor((Math.random() * 90000) + 10000))}`);
+                        setUser({name:"Login", gold:0});
                     }}>로그아웃</li>
                 </>
             );           
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [cookies.id]);
+
+    useEffect(() => {
+        if (cookies.id !== undefined) {
             setContent(
                 <div>
                     <img src={`${process.env.PUBLIC_URL}/images/coin.png`} alt="coin" />
-                    <p>1,581</p>
+                    <p>{user.gold}</p>
                 </div>
             );
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [user]);
+    }, [user.gold, cookies.id]);
 
     return (
         <section className={`TopSection ${inGame}`}>
@@ -73,7 +88,7 @@ const TopSection = ({inGame, user, loginCookie}: state) => {
                 </div>
                 <div className='topRightBox'>
                     <img id='profile' src={`${process.env.PUBLIC_URL}/images/${profileImg}.png`} alt='profile' onClick={() => profileClickEvnet()}></img>
-                    <p onClick={() => profileClickEvnet()}>{user}</p>
+                    <p onClick={() => profileClickEvnet()}>{user.name}</p>
                     <div>{content}</div>
                     <div id='menuBox'>
                         <img src={`${process.env.PUBLIC_URL}/images/menu.png`} alt='menu'></img>
@@ -83,7 +98,7 @@ const TopSection = ({inGame, user, loginCookie}: state) => {
                     </ul>
                 </div>
             </article>
-            <LogIn loginCookie={loginCookie} logIn={[logInClass, setLogInClass]}></LogIn>
+            <LogIn loginCookie={loginCookie} logIn={[logInClass, setLogInClass]} user={user}></LogIn>
             <CreateID displayFalg={[createIDClass, setCreateIDClass]}></CreateID>
         </section>
     );

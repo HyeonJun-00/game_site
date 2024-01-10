@@ -2,15 +2,7 @@ import './scss/LogIn.scss';
 import axios from 'axios';
 import { useState } from 'react';
 
-interface state {
-    children? : any;
-    userObject? : any;
-    logIn? : any;
-    setCreateIDClass? : any;
-    loginCookie:any
-}
-
-const LogIn = ({logIn, loginCookie}:state) => {
+const LogIn = ({logIn, loginCookie, user}:any) => {
     const [, setCookie, , setUser] = loginCookie;
     const [logInClass, setLogInClass] = logIn;
     const [userID, setUserID] = useState("");
@@ -28,7 +20,7 @@ const LogIn = ({logIn, loginCookie}:state) => {
             } else if (resData === "password is null") {
                 alert("비밀번호를 확인해 주세요.");
             } else {
-                setUser(userID);
+                setUser({...user, name:userID});
                 setCookie('id', userID);
                 setLogInClass("");
                 alert("로그인 성공.");
