@@ -23,7 +23,7 @@ urlpatterns = [
     path('nickname_duplicate_check/', views.nickname_duplicate_check),
     path('user_login/', views.user_login),
     path('user_gold/', views.UserGold.as_view()),
-    path('user_gold/<str:name>/<int:chgAmt>', views.UserGold.as_view()),
+    path('user_gold/<str:name>/<int:chgAmt>/', views.UserGold.as_view()),
     path('game/', views.Game.as_view()),
     path('game/<int:id>/', views.Game.as_view()),
     path('game/<int:id>/<view>/', views.Game.as_view()),

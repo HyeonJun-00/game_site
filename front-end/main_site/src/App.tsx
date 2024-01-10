@@ -76,7 +76,7 @@ const App = () => {
       <TopSection inGame={inGame} loginCookie={[cookies, setCookie, removeCookie, setUser]} user={user}></TopSection>
       <Routes>
         <Route path='/' element={<GameSelectionSection setGame={setGame} gameObject={gameObject} />}></Route>
-        <Route path='game/' element={<GamePlaySection thisGame={[nowGame, setGame]} user={user} />}></Route>
+        <Route path='game/' element={<GamePlaySection thisGame={[nowGame, setGame]} user={user} setUser={setUser} />}></Route>
       </Routes>
       <BottomSection></BottomSection>
     </div>

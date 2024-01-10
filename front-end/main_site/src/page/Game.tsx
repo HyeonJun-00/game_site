@@ -2,12 +2,12 @@ import './scss/Game.scss';
 import ShootingCat from './game_component/ShootingCat';
 import OmokGod from './game_component/OmokGod';
 
-const Game = ({nowGame, user}:{[key:string]:any}) => {
+const Game = ({nowGame, user, setUser}:{[key:string]:any}) => {
     const gameName:string = nowGame.gameSrc;
     const nowGameComponent = {
         "": <></>,
-        "shooting_cat": <ShootingCat></ShootingCat>,
-        "omok_god": <OmokGod></OmokGod>,
+        "shooting_cat": <ShootingCat user={user} setUser={setUser}></ShootingCat>,
+        "omok_god": <OmokGod user={user}></OmokGod>,
     }[gameName];
 
     return (

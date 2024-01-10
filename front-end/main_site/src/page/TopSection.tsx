@@ -69,6 +69,9 @@ const TopSection = ({inGame, user, loginCookie}: state) => {
                     <p>{user.gold}</p>
                 </div>
             );
+            if (user.gold !== undefined && user.gold !== 0) {
+                axios.patch(`http://35.216.113.72:10096/user_gold/${user.name}/${user.gold}/`);
+            }
         }
     }, [user.gold, cookies.id]);
 

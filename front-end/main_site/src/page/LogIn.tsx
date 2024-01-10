@@ -23,9 +23,9 @@ const LogIn = ({logIn, loginCookie, user}:any) => {
                 setUser({...user, name:userID});
                 setCookie('id', userID);
                 setLogInClass("");
-                alert("로그인 성공.");
                 setUserID("");
                 setUserPW("");
+                alert("로그인 성공.");
             }
         } catch (e) {
             console.error(e);

@@ -47,7 +47,7 @@ class UserGold(View):
     
     def patch(self, req, name, chgAmt):
         user = UserModel.objects.filter(user_nickname=name)
-        user.update(user_gold=user[0].user_gold + chgAmt)
+        user.update(user_gold=chgAmt)
 
         return HttpResponse(status=200)
     
