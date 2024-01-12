@@ -7,7 +7,7 @@ const Game = ({nowGame, user, setUser}:{[key:string]:any}) => {
     const nowGameComponent = {
         "": <></>,
         "shooting_cat": <ShootingCat user={user} setUser={setUser}></ShootingCat>,
-        "omok_god": <OmokGod user={user}></OmokGod>,
+        "omok_god": <OmokGod user={user} setUser={setUser}></OmokGod>,
     }[gameName];
 
     return (
