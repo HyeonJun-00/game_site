@@ -21,7 +21,7 @@ interface tag {
 const App = () => {
   const [cookies, setCookie, removeCookie] = useCookies(['id']);
   const [gameObject, setGameObjet] = useState<tag>({});
-  const [user, setUser] = useState((cookies.id && {name:cookies.id, gold:0}) || {name:"Login"});
+  const [user, setUser] = useState((cookies.id && {name:cookies.id, gold:-1}) || {name:"Login"});
   const [nowGame, setGame] = useState("");
   const [inGame, setIngame] = useState("");
   const locationPathname = useLocation().pathname;

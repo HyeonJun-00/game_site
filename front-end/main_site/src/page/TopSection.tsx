@@ -53,7 +53,7 @@ const TopSection = ({inGame, user, loginCookie}: state) => {
                     <li key={Math.random()} onClick={() => {
                         removeCookie("id");
                         setFlag("");
-                        setUser({name:"Login", gold:0});
+                        setUser({name:"Login", gold:-1});
                     }}>로그아웃</li>
                 </>
             );           
@@ -69,7 +69,7 @@ const TopSection = ({inGame, user, loginCookie}: state) => {
                     <p>{user.gold}</p>
                 </div>
             );
-            if (user.gold !== undefined && user.gold !== 0) {
+            if (user.gold !== undefined && user.gold !== -1) {
                 axios.patch(`http://35.216.113.72:10096/user_gold/${user.name}/${user.gold}/`);
             }
         }

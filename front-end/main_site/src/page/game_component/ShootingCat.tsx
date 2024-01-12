@@ -405,7 +405,7 @@ const ShootingCat = ({ user, setUser }: { [key: string]: any }) => {
     const [developerButtonSrc, setDeveloperButtonSrc] = useState(`${gameImageSrc}/game_developer_button_001.png`);
     const [restartButtonSrc, setRestartButtonSrc] = useState(`${gameImageSrc}/game_restart_button_001.png`);
     const [mainButtonSrc, setMainButtonSrc] = useState(`${gameImageSrc}/game_main_button_001.png`);
-    const [gameScore, setScore] = useState(0);
+    const [gameScore, setScore] = useState(-1);
 
     useEffect(() => {
         Sound.backgroundSoundPlay();
@@ -415,7 +415,7 @@ const ShootingCat = ({ user, setUser }: { [key: string]: any }) => {
     }, []);
 
     useEffect(() => {
-        if (gameScore != 0 && gameState === "end") {
+        if (gameScore != -1 && gameState === "end") {
             setUser({...user, gold: user.gold + gameScore});
         }
     }, [gameScore]);
