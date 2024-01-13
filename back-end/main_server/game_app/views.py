@@ -53,21 +53,35 @@ class UserGold(View):
     
 class Game(View):
     def get(self, req):
-        game_list = []
-        for game in GameModel.objects.all():
-            game_list.append(
-                {
-                    "id": game.id,
-                    "name": game.game_name,
-                    "view": game.game_view,
-                    "tag": game.game_tag,
-                    "description": game.game_description,
-                    "english": game.game_english_name,
-                    "created": str(game.created_date.date()),
-                }
-            )
 
-        return HttpResponse(json.dumps(game_list))
+        if len(req.GET) == 0:
+            game_list = []
+            for game in GameModel.objects.all():
+                game_list.append(
+                    {
+                        "id": game.id,
+                        "name": game.game_name,
+                        "view": game.game_view,
+                        "tag": game.game_tag,
+                        "description": game.game_description,
+                        "english": game.game_english_name,
+                        "created": str(game.created_date.date()),
+                    }
+                )
+            return HttpResponse(json.dumps(game_list))
+        else:
+            game_list = []
+            for game in GameModel.objects.filter(game_english_name=req.GET["name"]):
+                game_list.append(
+                    {
+                        "gameId": game.id,
+                        "gameName": game.game_name,
+                        "gameDescription": game.game_description,
+                        "gameSrc": game.game_english_name,
+                    }
+                )
+            return HttpResponse(json.dumps(game_list[0]))           
+
     
     def delete(self, req, id):
         GameModel.objects.get(id=id).delete()

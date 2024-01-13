@@ -6,7 +6,7 @@ const gameSoundSrc = `${process.env.PUBLIC_URL}/sounds/shooting_cat`;
 
 const ShootingCat = ({ user, setUser }: { [key: string]: any }) => {
     class Sound {
-        static mainSound = 0;
+        static mainSound = 1;
         static attackSound = 1;
         static backgroundSound = new Audio();
         static hoverSound = new Audio(`${gameSoundSrc}/hover.mp3`);
@@ -14,7 +14,7 @@ const ShootingCat = ({ user, setUser }: { [key: string]: any }) => {
             Sound.hoverSound.volume = .2 * Sound.mainSound;
             Sound.hoverSound.autoplay = true;
             Sound.hoverSound.load();
-        };
+        }
         static backgroundSoundPlay() {
             Sound.backgroundSound.src = `${gameSoundSrc}/background.mp3`;
             Sound.backgroundSound.loop = true;
@@ -408,13 +408,6 @@ const ShootingCat = ({ user, setUser }: { [key: string]: any }) => {
     const [gameScore, setScore] = useState(-1);
 
     useEffect(() => {
-        Sound.backgroundSoundPlay();
-        return () => {
-            Sound.backgroundSoundStop();
-        }
-    }, []);
-
-    useEffect(() => {
         if (gameScore != -1 && gameState === "end") {
             setUser({...user, gold: user.gold + gameScore});
         }
@@ -508,8 +501,17 @@ const ShootingCat = ({ user, setUser }: { [key: string]: any }) => {
         </div>
     }[gameState];
 
+    useEffect(() => {
+        window.addEventListener('click', () => {
+            Sound.backgroundSoundPlay(); 
+        }, { once: true });
+        return () => {
+            Sound.backgroundSoundStop();
+        }
+    }, []);
+
     return (
-        <article className='ShootingCat'>
+        <article className='ShootingCat' >
             <div className="gameLeft"></div>
             {content}
             <div className="gameRight"></div>

@@ -8,6 +8,9 @@ const OmokGod = ({nowGame, user}:{[key:string]:any}) => {
     return (
         <article className='OmokGod'>
             <img src={`${gameImageSrc}/background.jpg`} alt="" />
+            <div>
+
+            </div>
         </article>
     );
 };
