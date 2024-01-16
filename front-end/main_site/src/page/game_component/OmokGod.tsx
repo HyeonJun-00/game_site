@@ -5,6 +5,7 @@ const gameSoundSrc = `${process.env.PUBLIC_URL}/sounds/omok_god`;
 
 const OmokGod = ({nowGame, user}:{[key:string]:any}) => {
 
+
     return (
         <article className='OmokGod'>
             <img src={`${gameImageSrc}/background.jpg`} alt="" />
