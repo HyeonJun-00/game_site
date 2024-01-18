@@ -1,5 +1,60 @@
 .OmokGod {
     position: relative;
+    
+    & > .waitingRoom{
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+
+        & > div:nth-child(1) {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            width: 81.1rem;
+            height: 100%;
+
+            & > div:nth-child(1) {
+                background-color: #FFFFFF;
+                box-sizing: border-box;
+                border: 1px solid #8B8B8B;
+                border-radius: 1rem;
+                width: 100%;
+                height: 40.4rem;
+            }
+            & > div:nth-child(2) {
+                background-color: #FFFFFF;
+                box-sizing: border-box;
+                border: 1px solid #8B8B8B;
+                border-radius: 1rem;
+                width: 100%;
+                height: 25rem;
+            }
+        }
+        & > div:nth-child(2) {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            width: 33.7rem;
+            height: 100%;
+
+            & > div:nth-child(1) {
+                background-color: #FFFFFF;
+                box-sizing: border-box;
+                border: 1px solid #8B8B8B;
+                border-radius: 1rem;
+                width: 100%;
+                height: 46.7rem;
+            }
+            & > div:nth-child(2) {
+                background-color: #FFFFFF;
+                box-sizing: border-box;
+                border: 1px solid #8B8B8B;
+                border-radius: 1rem;
+                width: 100%;
+                height: 18.5rem;
+            }
+        }
+    }
     & > div {
         position: absolute;
         top: 0;
